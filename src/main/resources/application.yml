@@ -29,6 +29,13 @@ spring:
         max-idle: 8
         max-wait: -1
     timeout: 5000
+  data:
+  #mongodb
+    mongodb:
+      host: 192.168.146.200
+      port: 27017
+     # username:
+      database: test
 
 
 
