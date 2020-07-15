@@ -5,7 +5,6 @@ import com.demo.dao.entity.Role;
 import com.demo.dao.entity.User;
 import com.demo.reidsdao.redissvc.UserRedis;
 import com.sun.istack.internal.logging.Logger;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

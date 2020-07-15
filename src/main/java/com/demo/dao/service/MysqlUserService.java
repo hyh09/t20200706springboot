@@ -8,9 +8,9 @@ import com.demo.dao.entity.Role;
 import com.demo.dao.entity.User;
 import com.demo.dao.svc.UserSvc;
 import com.sun.istack.internal.logging.Logger;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+//import org.junit.Assert;
+//import org.junit.Before;
+//import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,13 +44,13 @@ public class MysqlUserService implements UserSvc {
         deparment.setName("西游记部门");
         departmentRepository.save(deparment);
 
-        Assert.assertNotNull(deparment.getId());
+    //    Assert.assertNotNull(deparment.getId());
 
 
         Role roloe = new Role();
         roloe.setName("admin");
         roleRepository.save(roloe);
-        Assert.assertNotNull(roloe.getId());
+    //    Assert.assertNotNull(roloe.getId());
 
         User user = new User();
         user.setName("孙悟空");
