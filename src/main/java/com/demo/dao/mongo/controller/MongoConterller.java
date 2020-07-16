@@ -1,45 +1,80 @@
-//package com.demo.dao.mongo.controller;
-//
-//import com.demo.dao.entity.mondoentity.User;
-//import com.sun.istack.internal.logging.Logger;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.mongodb.core.MongoTemplate;
-//import org.springframework.data.mongodb.core.query.Criteria;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
-//
-//import  org.springframework.data.mongodb.core.query.Query;
-//import java.util.Date;
-//import java.util.HashSet;
-//import java.util.Set;
-//
-///**
-// * Created by dell on 2020/7/13.
-// */
-//@RestController
-//public class MongoConterller {
-//
-//    private static Logger logger = Logger.getLogger(MongoConterller.class);
-//
-//
-//    //    @SuppressWarnings("SpringJavaAutowiringInspection")
-////    @Autowired
-////    private UserRepository userRepository;
-//
-//    @Autowired
-//    private MongoTemplate mongoTemplate;
-//
-//
-//    @RequestMapping("/mongo1")
-//    public   User  jpaFindUser(){
-//        Set<String> roles = new HashSet<>();
-//        roles.add("manger");
-//        User user = new User("1","user","12345678","44444@qq.com",new Date(),roles);
-//        logger.info("====>"+user);
-//        mongoTemplate.save(user);
-//        Query  query = new Query(Criteria.where("userName").is("user"));
-//        User  users=    mongoTemplate.findOne(query,User.class);
-//        return  users;
-//
-//    }
-//}
+package com.demo.dao.mongo.controller;
+
+import java.util.Date;
+import java.util.List;
+
+import com.demo.dao.entity.mondoentity.Book;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.demo.dao.serviceImp.MongoDbService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+
+
+/**
+ * Created by dell on 2020/7/13.
+ */
+@RestController
+public class MongoConterller {
+
+    private static final Logger logger = LoggerFactory.getLogger(MongoDbService.class);
+
+    @Autowired
+    private MongoDbService mongoDbService;
+
+
+    //localhost:8089/mongo/save
+    @GetMapping("/mongo/save")
+    public String saveObj( ) {
+        Book book =new  Book();//[]
+        logger.info("====user===："+book);
+        //if(book==null){
+            book.setId("1");
+            book.setName("孙悟空");
+            book.setCreateTime(new Date());
+       // }
+        logger.info("===========================");
+        return mongoDbService.saveObj(book);
+    }
+
+    @GetMapping("/mongo/findAll")
+    public List<Book> findAll() {
+        return mongoDbService.findAll();
+    }
+
+    @GetMapping("/mongo/findOne")
+    public Book findOne(@RequestParam String id) {
+        return mongoDbService.getBookById(id);
+    }
+
+    @GetMapping("/mongo/findOneByName")
+    public Book findOneByName(@RequestParam String name) {
+        return mongoDbService.getBookByName(name);
+    }
+
+    @PostMapping("/mongo/update")
+    public String update(@RequestBody Book book) {
+        return mongoDbService.updateBook(book);
+    }
+
+    @PostMapping("/mongo/delOne")
+    public String delOne(@RequestBody Book book) {
+        return mongoDbService.deleteBook(book);
+    }
+
+    @GetMapping("/mongo/delById")
+    public String delById(@RequestParam String id) {
+        return mongoDbService.deleteBookById(id);
+    }
+
+    @GetMapping("/mongo/findlikes")
+    public List<Book> findByLikes(@RequestParam String search) {
+        return mongoDbService.findByLikes(search);
+    }
+
+}
