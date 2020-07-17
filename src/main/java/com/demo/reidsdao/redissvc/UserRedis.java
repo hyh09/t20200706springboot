@@ -3,10 +3,11 @@ package com.demo.reidsdao.redissvc;
 import com.demo.dao.entity.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
-import com.sun.istack.internal.logging.Logger;
+//import com.sun.istack.internal.logging.Logger;
 import org.springframework.util.StringUtils;
 
 import java.util.List;

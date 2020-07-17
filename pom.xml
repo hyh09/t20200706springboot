@@ -54,17 +54,49 @@
         </dependency>
 
         <!--数据库 4.neo4j 、、、、-->
-        <dependency>
-            <!--通过spring-data-rest-webmvc，支持通过REST暴露Spring Data数据仓库。-->
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-rest</artifactId>
-            <!--<version></version>-->
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-neo4j</artifactId>
-            <version>4.0.0.RELEASE</version>
-        </dependency>
+       <dependency>
+           <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-starter-data-neo4j</artifactId>
+       </dependency>
+
+        <!--&lt;!&ndash; add this dependency if you want to use the embedded driver &ndash;&gt;-->
+               <!--<dependency>-->
+                   <!--<groupId>org.neo4j</groupId>-->
+                   <!--<artifactId>neo4j-ogm-embedded-driver</artifactId>-->
+               <!--</dependency>-->
+
+               <!--&lt;!&ndash; add this dependency if you want to use the HTTP driver &ndash;&gt;-->
+               <!--<dependency>-->
+                   <!--<groupId>org.neo4j</groupId>-->
+                   <!--<artifactId>neo4j-ogm-http-driver</artifactId>-->
+               <!--</dependency>-->
+
+
+        <!--<dependency>-->
+            <!--&lt;!&ndash;通过spring-data-rest-webmvc，支持通过REST暴露Spring Data数据仓库。&ndash;&gt;-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-data-rest</artifactId>-->
+            <!--&lt;!&ndash;<version></version>&ndash;&gt;-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.data</groupId>-->
+            <!--<artifactId>spring-data-neo4j</artifactId>-->
+            <!--<version>4.0.0.RELEASE</version>-->
+        <!--</dependency>-->
+
+
+        <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
+            <!--&lt;!&ndash;<groupId>org.neo4j</groupId>&ndash;&gt;-->
+            <!--&lt;!&ndash;<artifactId>neo4j-ogm-embedded-driver</artifactId>&ndash;&gt;-->
+            <!--&lt;!&ndash;<version>3.0.2</version>&ndash;&gt;-->
+        <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
+
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/com.voodoodyne.jackson.jsog/jackson-jsog &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.voodoodyne.jackson.jsog</groupId>-->
+            <!--<artifactId>jackson-jsog</artifactId>-->
+            <!--<version>1.1.1</version>-->
+        <!--</dependency>-->
 
 
         <!--、、、、、、、、、、工具集、、、、、、、、、、、、-->
@@ -78,6 +110,13 @@
             <artifactId>jackson-annotations</artifactId>
             <version>2.9.7</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!--、、、、、、、、、、工具集、、、、、、、、、、、、-->
 
 

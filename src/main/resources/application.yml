@@ -34,6 +34,14 @@ spring:
     mongodb:
       uri: mongodb://192.168.146.200:27017/test
 
+    neo4j:
+      uri: bolt://192.168.146.200:7687  #bolt://101.101.15.110:7687  dbms.connector.bolt.listen_address=:7687
+      username: neo4j
+      password: 1234567
+
+  main:
+    allow-bean-definition-overriding: true
+#      spring.main.allow-bean-definition-overriding=true
 
 
 
