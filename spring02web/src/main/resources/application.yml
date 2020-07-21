@@ -11,6 +11,39 @@ spring:
     servlet:
       content-type: text/html
     cache: false
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    dbcp2:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/yuntest?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
+      username: root
+      password: 1234567
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait-millis: 60000
+      ###配置间隔多久进行一次检验，检测需要关闭的空闲的连接,单位是毫秒；
+      time-between-eviction-runs-millis: 60000
+      ####配置一个连接在池中的最小生存时间
+      min-evictable-idle-time-millis: 300000
+      validation-query:  SELECT 1 FROM  DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+    tomcat:
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+
+      #JPA配置
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  jackson:
+    serialization: true
+
+
 
 
 
