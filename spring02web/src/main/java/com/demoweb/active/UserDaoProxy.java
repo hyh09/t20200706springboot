@@ -18,4 +18,12 @@ public class UserDaoProxy  implements IUserDao{
         System.out.println("关闭事物...");
     }
 
+    @Override
+    public String SayHello(String name) {
+        System.out.println("开启事物...");
+      String  str=  target.SayHello(name);
+        System.out.println("关闭事物...");
+        return  str;
+    }
+
 }

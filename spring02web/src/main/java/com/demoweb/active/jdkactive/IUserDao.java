@@ -5,4 +5,7 @@ package com.demoweb.active.jdkactive;
  */
 public interface  IUserDao {
     void save();
+
+    public String SayHello(String name);
+
 }
