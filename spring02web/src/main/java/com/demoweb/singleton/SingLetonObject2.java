@@ -3,7 +3,7 @@ package com.demoweb.singleton;
 /**
  * Created by dell on 2020/7/29.
  *
- *
+ *懒汉式 2种
  */
 public class SingLetonObject2 {
 
