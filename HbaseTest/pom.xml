@@ -15,4 +15,24 @@
     <artifactId>HbaseTest</artifactId>
 
 
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-client</artifactId>
+            <version>1.2.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+            <version>4.12</version>
+        </dependency>
+
+
+    </dependencies>
+
+
 </project>
