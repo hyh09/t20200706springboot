@@ -17,12 +17,12 @@ import java.util.List;
 public class HBaseUtil {
 
     /**
-     *
+     *创建HBASE表
      * @param tableName  表名
-     * @param cfs
-     * @return
+     * @param cfs 列族的数组
+     * @return  是否创建成功
      */
-    public  boolean createTable(String tableName,String[] cfs){
+    public  static boolean createTable(String tableName,String[] cfs){
 
          try(HBaseAdmin  admin = (HBaseAdmin) Hbaseconn.getHBaseConn().getAdmin()){
              if(admin.tableExists(tableName)){

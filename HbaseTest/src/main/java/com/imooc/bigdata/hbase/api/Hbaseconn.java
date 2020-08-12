@@ -25,7 +25,9 @@ public class Hbaseconn {
         try{
             if (configuration==null){
                 configuration = HBaseConfiguration.create();
-                configuration.set("hbase.zookeeper.quorum","92.168.146.200::2181");
+                configuration.set("hbase.zookeeper.quorum","192.168.146.200:2181");
+//                conf.set("hbase.zookeeper.quorum", "data9");
+//                conf.set("hbase.zookeeper.property.clientPort", "2181");
                 //configuration.set
             }
 
