@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Yun3DetailExcelBO implements Serializable{
 
    // 省份	规划主机用户	密码
-    private  String  province;
+    private  String  province;//
 
     private  String userName;
 

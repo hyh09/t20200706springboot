@@ -1,0 +1,30 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:bean:service:ffcs:com">\r
+   <soapenv:Header>\r
+      <Esb soapenv:actor="" soapenv:mustUnderstand="0">\r
+         <Route>\r
+            <Sender>10.1118</Sender>\r
+            <Time>20140804163717</Time>\r
+            <ServCode>10.1208.00.CW-CFZC-ZB.ReceiveDataResultNoticeFromOSS.SynReq</ServCode>\r
+            <MsgId>1407141442740</MsgId>\r
+            <AuthCode/>\r
+            <TransId/>\r
+            <AuthType/>\r
+            <Version/>\r
+            <MsgType/>\r
+            <CarryType>0</CarryType>\r
+            <ServTestFlag>0</ServTestFlag>\r
+            <EsbId>efd7009115f92430bec52a3c771232e8</EsbId>\r
+         </Route>\r
+         <Business>\r
+            <BizDomain>A03</BizDomain>\r
+            <BizFirstType>101</BizFirstType>\r
+            <BizSecType>10011</BizSecType>\r
+         </Business>\r
+      </Esb>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <urn:ReceiveDataResultNoticeFromOSS>\r
+         <arg0><![CDATA[<ReqRoot><FromServer>34.1103.134.64.110.73</FromServer><ReqTime>2014-08-04 16:37:17</ReqTime><BillNo>JHJS_GD_9000000021032420140801154255000</BillNo><ToServer>34.1238.132.33.72.24</ToServer><TaskList> <Task fileId="JHJS_20140801_90000000210324" from="/ftp/gd3ma/upload" fromName="90000000210324_20140801154255_20140804163717426.xml" to="/home/ftpuser/OSS/GD/toProj/" toName="90000000210324_20140801154255_20140804163717426.xml" id="536e950f-ffd7-4450-9c1f-bb55097005f5" returnCode="1" returnMsg="传输成功"><BusinessInfo><InterfaceCode>oipfmv.busiflow.mssmatlsync</InterfaceCode></BusinessInfo></Task></TaskList></ReqRoot>]]></arg0>\r
+      </urn:ReceiveDataResultNoticeFromOSS>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>

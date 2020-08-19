@@ -1,0 +1,17 @@
+http://10.128.90.211:8886/gmssintersvc/webservices/materialcontentsdistributeproxy?wsdl
+
+http://10.128.90.56:10227/gmssintersvc/webservices/materialcontentsdistributeproxy?wsdl
+
+
+代码报错 xml中没有这个方法
+mmMaterielSpecMapper.noteToParentId();
+
+
+mssOipSvcCommUrl 地址配置
+isvc.oip.commurl  gc-bscsvr-cfg.properties
+
+//集团EOP生产环境：http://10.128.86.85:8000/serviceAgent/httpCommonService
+//        集团EOP测试环境：http://10.128.190.145:8000/serviceAgent/httpCommonService
+
+
+REQ3_4_1物料目录分发接口

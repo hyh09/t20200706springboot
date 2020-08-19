@@ -1,0 +1,33 @@
+shdx010	10.128.109.10 #广东 hbase44 #云南   hbase53
+shdx011	10.128.109.11 #广东 Hregionserver  #云南Hregionserver
+shdx013	10.128.109.13 #广东 Hregionserver  #云南Hregionserver
+shdx014	10.128.109.14 #广东 Hregionserver  #重庆主Hmaster
+shdx015	10.128.109.15 #广东 Hregionserver  #重庆主Hmaster
+shdx016	10.128.109.16 #广东 Hregionserver  #重庆主Hregionserver
+shdx020	10.128.109.20 #浙江主Hmaster  #青海Hmaster
+shdx021	10.128.109.21 #浙江主Hregionserver  #青海Hregionserver
+shdx024	10.128.109.24  浙江主Hregionserver  #贵州Hmaster
+shdx025	10.128.109.25 #浙江Hregionserver      #贵州master
+shdx026	10.128.109.26 #浙江Hregionserver    #贵州Hregionserver
+shdx030	10.128.109.30 #江苏Hregionserver   #甘肃备Hmaster
+shdx031	10.128.109.31 #浙江Hregionserver    #甘肃Hregionserver
+shdx032	10.128.109.32 #浙江Hregionserver    #甘肃Hregionserver
+shdx033	10.128.109.33 #浙江Hregionserver    #甘肃Hregionserver
+shdx035	10.128.109.35 #四川maset   #江苏Hregionserver  #西藏maset
+shdx036	10.128.109.36 #四川Hregionserver  #西藏Hregionserver
+shdx038	10.128.109.38 #四川Hregionserver   #西藏Hregionserver
+shdx039	10.128.109.39 #四川Hregionserver
+shdx043	10.128.109.43 #上海Hregionserver   #福建备Hmaster
+shdx048	10.128.109.48  #天津Hregionserver   #江西Hregionserver  #安徽Hmaster
+shdx053	10.128.109.53    #宁夏Hmaster    #海南Hmaster    #新疆Hregionserver   #陕西Hregionserver
+shdx079	10.128.109.102 #湖北Hregionserver  #内蒙Hregionserver   #北京Hregionserver
+shdx087	10.128.109.110 #黑龙江备Hmaster    #湖南Hregionserver   #辽宁Hregionserver
+shdx089	10.128.109.112 #广西Hmaster   #河南Hregionserver #吉林Hregionserver
+shdx094	10.128.109.117 #山东Hmaster   #河北Hregionserver #山西Hregionserver
+shdx049	10.128.109.49  #天津Hregionserver #江西Hmaster #安徽Hregionserver
+shdx050	10.128.109.50  #天津Hmaster  #江西Hmaster #安徽Hregionserver
+shdx051	10.128.109.51  #天津Hmaster  #江西Hregionserver #安徽Hregionserver
+shdx052	10.128.109.52  #宁夏Hmaster #海南Hregionserver #新疆Hregionserver   #陕西Hregionserver
+shdx054	10.128.109.54  #宁夏Hregionserver #海南Hmaster #新疆Hmaster   #陕西Hregionserver
+shdx055	10.128.109.55  #宁夏Hregionserver #海南Hregionserver #新疆Hmaster   #陕西Hmaster
+shdx056	10.128.109.56  #宁夏Hregionserver #海南Hregionserver #新疆Hregionserver  #陕西Hmaster
