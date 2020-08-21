@@ -4,16 +4,11 @@ package com.zk;
  * Created by dell on 2020/8/21.
  */
 
-import java.lang.reflect.Field;
-import java.math.BigInteger;
-import java.util.*;
-
 import com.sinovate.ngrms.gcbscsvr.das.support.Utils.BeanMapUtils;
 import com.sinovate.ngrms.gcbscsvr.das.support.Utils.CamelNameUtils;
 import com.sinovate.ngrms.gcbscsvr.mdl.db.gcdm.eother.PmAssetMssback;
 import com.utltl.Stringtool;
 import com.utltl.TxtR;
-import com.utltl.exceltool.ExportExcelyunSvc;
 import com.utltl.exceltool.ExportExcelyunUtils;
 import com.utltl.exceltool.beansvc.Conf;
 import com.utltl.exceltool.beansvc.FileShow;
@@ -21,20 +16,25 @@ import com.utltl.exceltool.beansvc.JsonDateValueProcessor;
 import com.utltl.exceltool.mobansanm.RequestforreferenceBo;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
-import org.apache.poi.ss.formula.functions.T;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
-public class zkTest {
+import java.lang.reflect.Field;
+import java.math.BigInteger;
+import java.util.*;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(zkTest.class);
+public class PmAssetMssbackTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PmAssetMssbackTest.class);
 
 
-
-    @Test
+    /**
+     * 交资的明细的入参对象
+     * @throws Exception
+     */
+       @Test
         public  void Test1() throws Exception{
             String mapJson = "";
 
@@ -43,7 +43,10 @@ public class zkTest {
            // PmAssetMssback pmAssetMssback =new PmAssetMssback();
         List<RequestforreferenceBo> requestforreferenceBoList = new ArrayList<>();
 
-        PmAssetMssback pmAssetMssback=   getInstance(new PmAssetMssback(),requestforreferenceBoList);
+           /**
+            *
+            */
+        PmAssetMssback pmAssetMssback=   getInstance(new PmAssetMssback(),requestforreferenceBoList); //填充这个
         System.out.println("=====>"+pmAssetMssback);
         List<PmAssetMssback> voList =new ArrayList<>();
 //       new  ExportExcelyunUtils().write2File("",voList,new PmAssetMssback());
@@ -64,6 +67,17 @@ public class zkTest {
 
         }
 
+
+
+    /**
+     * 反射取值
+     * @param bean
+     * @param requestforreferenceBoList
+     * @param <T>
+     * @return
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
     public static  <T> T getInstance(T bean,List<RequestforreferenceBo> requestforreferenceBoList) throws IllegalAccessException, InstantiationException {
         Class<?> clz = bean.getClass();
       //  Object obj = bean.getClass().newInstance();
@@ -99,7 +113,8 @@ public class zkTest {
                  }
                  //首字母大写
                 System.out.println("====>fieldgetName:"+field.getName());
-               bo.setTechnicalfieldName( Stringtool.upperFirstLatter2(field.getName()) );
+               //bo.setTechnicalfieldName( Stringtool.upperFirstLatter2(field.getName()) );// 和请求的入参一个方法
+                bo.setTechnicalfieldName( CamelNameUtils.underscoreName(field.getName()) );// 和请求的入参一个方法
 
                //
                 bo.setSelectType(fs.selectType());
