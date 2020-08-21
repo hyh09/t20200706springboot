@@ -28,7 +28,7 @@ public interface ExportExcelyunSvc {
      * @return
      * @throws Exception
      */
-    public   void write2File(String fileName, List<T> voList , T beans) throws Exception;
+    public  <T> void write2File(String fileName, List<T> voList, T beans) throws Exception;
 
 
 

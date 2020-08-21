@@ -52,11 +52,37 @@ public class ExportExcelyunUtils implements ExportExcelyunSvc {
     }
 
 
-
-
+    /**
+     *   @RemoteMethod
+     @RequestMapping("/intqry/exportAssetCardsOrderUsing")
+     @ResponseBody
+     public FileTransfer exportAssetCardsOrderUsing(HttpServletResponse response, CardBillStatuBo params, PageRequest pageRequest) throws Exception {
+     LOGGER.info("=====   Welcome to 导出在途   export ======");
+     Page<CardsOrderUsingBo> cardsOrderUsingBos = ablAssetCardsOrderUsingSvc.qryAssetCardsOrderUsing(params,pageRequest);
+     List<CardsOrderUsingBo> cardBillStatuBoList = cardsOrderUsingBos.getRows();
+     LOGGER.info("开始导出");
+     List<CardsOrderVo> voList =new ArrayList<CardsOrderVo>();
+     if(CollectionUtils.isNotEmpty(cardBillStatuBoList)){
+     voList=  getCarVo(cardBillStatuBoList);
+     }
+     LOGGER.info("临时文件数据条数："+voList.size());
+     HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+     String userAgent = request.getHeader("User-Agent");
+     String  tablename=exportExcelyunSvc.encodeFileName("在途单信息导出.xls",userAgent);
+     return   exportExcelyunSvc.exportExcel(response,tablename,voList,new CardsOrderVo());
+     }
+     * @param response
+     * @param fileName
+     * @param tablename
+     * @param voList
+     * @param beans
+     * @param <T>
+     * @return
+     * @throws Exception
+     */
 
     @Override
-    public   <T> FileTransfer exportExcel(HttpServletResponse response, String fileName, String tablename, List<T> voList , T beans) throws Exception {
+    public    <T> FileTransfer exportExcel(HttpServletResponse response, String fileName, String tablename, List<T> voList , T beans) throws Exception {
         ExcelData  data  =new ExcelData();
          data.setTableName(tablename);
         List<Object> objectList =new ArrayList<Object>();
@@ -107,9 +133,9 @@ public class ExportExcelyunUtils implements ExportExcelyunSvc {
 
 
     @Override
-    public    void write2File(String fileName, List<T> voList , T beans) throws Exception {
+    public    <T> void   write2File(String fileName, List<T> voList , T beans) throws Exception {
         ExcelData  data  =new ExcelData();
-        String tablename =gettableNamebyBean(beans);
+        String tablename =fileName+"[请求参数列表]";//gettableNamebyBean(beans);
         data.setTableName(tablename);
         List<Object> objectList =new ArrayList<Object>();
         getFiledsbyBean(beans,objectList);
@@ -152,8 +178,7 @@ public class ExportExcelyunUtils implements ExportExcelyunSvc {
       //  ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
 
-        String path="d:\\workbook\\"+filename;
-        FileOutputStream output=new FileOutputStream(path);
+        String path="d:\\workbook\\"+filename+".xls";
         File file = new File(path);
 
         logger.info("出来吧!");
@@ -166,6 +191,17 @@ public class ExportExcelyunUtils implements ExportExcelyunSvc {
                 sheetName = "Sheet1";
             }
             HSSFSheet sheet = wb.createSheet(sheetName);
+            /**
+             * ａ表示要冻结的列数；
+
+             ｂ表示要冻结的行数；
+
+             ｃ表示右边区域[可见]的首列序号；
+
+             ｄ表示下边区域[可见]的首行序号；
+             */
+            sheet.createFreezePane( 2,2,3,2);
+         //   CreateFreezePane(0,1,0,1)
             writeExcel(wb, sheet, data);//
             if(file.exists()){
 
@@ -177,9 +213,11 @@ public class ExportExcelyunUtils implements ExportExcelyunSvc {
 
        try {
                 logger.info("文件不存在，创建文件，写入数据！");
-                new File(path).mkdirs();
+               // new File(path).mkdirs();
                 file.createNewFile();
-                logger.info("@云，创建目录成功!");
+           FileOutputStream output=new FileOutputStream(path);
+
+           logger.info("@云，创建目录成功!");
                 wb.write(output);
                 logger.info("@云 ,写入成功了!");
                 logger.info("@云 ,写入成功了!");
@@ -301,6 +339,46 @@ public class ExportExcelyunUtils implements ExportExcelyunSvc {
 
         titleStyle.setAlignment(XSSFCellStyle.ALIGN_CENTER);
         titleStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        titleStyle.setFillForegroundColor( IndexedColors.GREY_25_PERCENT.getIndex());// 背景颜色
+        titleStyle.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+        titleStyle.setFont(titleFont);
+        setBorder(titleStyle, BorderStyle.THIN, wb);
+
+        Row titleRow = sheet.createRow(rowIndex);
+        // titleRow.setHeightInPoints(25);
+        colIndex = 0;
+
+        for (String field : data.getFields()) {
+            Cell cell = titleRow.createCell(colIndex);
+            cell.setCellValue(field);
+            cell.setCellStyle(titleStyle);
+            colIndex++;
+        }
+
+        rowIndex++;
+        return rowIndex;
+
+    }
+
+
+    //绿色
+    private  static  int writeFieldsDateToExce22l(HSSFWorkbook wb, Sheet sheet, ExcelData data){
+
+
+        int rowIndex = 1;
+        int colIndex = 0;
+
+        Font titleFont = wb.createFont();
+        titleFont.setFontName("simsun");
+        // titleFont.setBold(true);
+        // titleFont.setFontHeightInPoints((short) 14);
+        titleFont.setColor(IndexedColors.BLACK.index);
+
+//        XSSFCellStyle titleStyle = wb.createCellStyle();
+        HSSFCellStyle titleStyle = wb.createCellStyle();
+
+        titleStyle.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        titleStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
         titleStyle.setFillForegroundColor((short) 17);//
         titleStyle.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
         titleStyle.setFont(titleFont);
@@ -341,6 +419,17 @@ public class ExportExcelyunUtils implements ExportExcelyunSvc {
         dataStyle.setFont(dataFont);
         setBorder(dataStyle, BorderStyle.THIN,wb);
 
+
+        Font dataFont1 = wb.createFont();
+        dataFont1.setFontName("simsun");
+        // dataFont.setFontHeightInPoints((short) 14);
+        dataFont1.setColor(IndexedColors.RED.getIndex());
+        HSSFCellStyle dataStyle1 = wb.createCellStyle();
+        dataStyle1.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        dataStyle1.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        dataStyle1.setFont(dataFont1);
+        setBorder(dataStyle1, BorderStyle.THIN,wb);
+
         for (List<Object> rowData : rows) {
             Row dataRow = sheet.createRow(rowIndex);
             // dataRow.setHeightInPoints(25);
@@ -353,9 +442,13 @@ public class ExportExcelyunUtils implements ExportExcelyunSvc {
                 } else {
                     cell.setCellValue("");
                 }
+                if(cellData.equals("必填")){
+                    cell.setCellStyle(dataStyle1);//红色
+                }else {
+                        cell.setCellStyle(dataStyle);
+                }
 
-                cell.setCellStyle(dataStyle);
-                colIndex++;
+                    colIndex++;
             }
             rowIndex++;
         }
