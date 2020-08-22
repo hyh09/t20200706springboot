@@ -160,8 +160,9 @@ public class PmAssetMssback implements Serializable {
 
 
 	@Conf("341007000000042782308721")//初始化的默认值
-	@FileShow(fieldName = "转固单据ID",datatype = "String",fieldSize = "24",selectType = "必填",notes = "转固单据id")
+	@FileShow(fieldName = "ID",datatype = "CHAR",fieldSize = "255",selectType = "必填",notes = "主键id")
 	private BigInteger id;
+
     @FileShow(fieldName = "转固单据ID",datatype = "CHAR",fieldSize = "255.0",selectType = "必填",notes = "null")
     private  String zgdj;
     @Conf("20AH000120201")
@@ -282,9 +283,9 @@ public class PmAssetMssback implements Serializable {
 	private  String zzCbrq;
 	@FileShow(fieldName = "出保约定费率",datatype = "DEC",fieldSize = "(5,2)",selectType = "非必填",notes = "02应用类软件选填，两位小数，不用带%")
 	private  Double zzCbydfl;
-	@FileShow(fieldName = "出保约定费率",datatype = "DEC",fieldSize = "(5,2)",selectType = "非必填",notes = "02应用类软件选填，两位小数，不用带%")
+	@FileShow(fieldName = "创建时间",datatype = "CHAR",fieldSize = "yyyy/MM/dd HH:mm:ss",selectType = "非必填",notes = "")
 	private java.util.Date createDate;
-	@FileShow(fieldName = "出保约定费率",datatype = "DEC",fieldSize = "(5,2)",selectType = "非必填",notes = "02应用类软件选填，两位小数，不用带%")
+	@FileShow(fieldName = "修改时间",datatype = "CHAR",fieldSize = "yyyy/MM/dd HH:mm:ss",selectType = "非必填",notes = "")
 	private java.util.Date editDate;
 
 

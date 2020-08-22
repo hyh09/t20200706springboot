@@ -122,11 +122,11 @@ public class TxtR
 //            file.delete();
 //            System.out.println("文件存在删除！");
 //        }
-//        try {
-//            fw = new FileWriter(file, true);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-  //      }
+        try {
+            fw = new FileWriter(file, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         PrintWriter pw = new PrintWriter(fw);
         pw.println(conent);
         pw.flush();

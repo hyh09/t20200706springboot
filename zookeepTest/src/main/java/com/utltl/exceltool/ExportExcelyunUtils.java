@@ -135,7 +135,7 @@ public class ExportExcelyunUtils implements ExportExcelyunSvc {
     @Override
     public    <T> void   write2File(String fileName, List<T> voList , T beans) throws Exception {
         ExcelData  data  =new ExcelData();
-        String tablename =fileName+"[请求参数列表]";//gettableNamebyBean(beans);
+        String tablename =fileName;//gettableNamebyBean(beans);
         data.setTableName(tablename);
         List<Object> objectList =new ArrayList<Object>();
         getFiledsbyBean(beans,objectList);

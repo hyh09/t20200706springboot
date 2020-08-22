@@ -62,10 +62,10 @@ public class PmAssetMssbackTest {
             jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
             jsonConfig.registerJsonValueProcessor(BigInteger.class, new JsonDateValueProcessor());
             mapJson = JSONArray.fromObject(dateMapList, jsonConfig).toString();
-            LOGGER.info("mapJson:"+mapJson);
+           System.out.println("mapJson:"+mapJson);
 
 
-       new  ExportExcelyunUtils().write2File("交资明细信息同步接口",requestforreferenceBoList,new RequestforreferenceBo());
+       new  ExportExcelyunUtils().write2File("交资明细信息同步接口【请求参数列表】",requestforreferenceBoList,new RequestforreferenceBo());
        new TxtR().method3("交资明细信息同步接口",new Stringtool().formatbyFastJson(mapJson));
 
 
@@ -107,6 +107,10 @@ public class PmAssetMssbackTest {
 
             boolean fileShow = field.isAnnotationPresent(FileShow.class);
             if(fileShow){
+
+//                if(typeName.equals("Date")){
+//                    field.set(bean, new Date());
+//                }
                 RequestforreferenceBo  bo = new RequestforreferenceBo();
                 FileShow fs = field.getAnnotation(FileShow.class);
                 bo.setFieldName( fs.fieldName());
@@ -163,7 +167,7 @@ public class PmAssetMssbackTest {
      * @return
      */
     @Test
-    public RequestforreferenceBo   getExcel(){
+    public void   getExcel(){
 
 
         String fileName = this.getClass().getClassLoader().getResource("ruexcel/01.xlsx").getPath();//获取文件路径
@@ -179,44 +183,58 @@ public class PmAssetMssbackTest {
 
 
         for(RequestforreferenceBo bo:assetDetailExcelBos){
-            String fildname= bo.getTechnicalfieldName();
-          String fildname2=   CamelNameUtils.camelName(fildname);
-            System.out.println("====>"+fildname+"=====>"+fildname2);
-            tomobang(bo);
+//            String fildname= bo.getTechnicalfieldName();
+//          String fildname2=   CamelNameUtils.camelName(fildname);
+//            System.out.println("====>"+fildname+"=====>"+fildname2);
+            tomobang(bo,new PmAssetMssback());
 
         }
 
 
-        return  null;
 
     }
 //	@FileShow(fieldName = "出保約定期限（月）",datatype = "CHAR",fieldSize = "8",selectType = "非必填",notes = "02应用类软件选填")
 //private String zzCbrq;
-    private void tomobang(RequestforreferenceBo bo1) {
+    private <T> void tomobang(RequestforreferenceBo bo1,T bean) {
 
 
 
-        Class<?> clz = new PmAssetMssbackTest().getClass();
+        Class<?> clz = new PmAssetMssback().getClass();
         //  Object obj = bean.getClass().newInstance();
 
         Field[] fields = clz.getDeclaredFields();
         for (Field field : fields) {
-            if(CamelNameUtils.underscoreName(field.getName()).equals(   bo1.getTechnicalfieldName())) {
+        String str11=    CamelNameUtils.underscoreName(field.getName());
+
+
+
+         //   System.out.println("====>"+str11+"====>"+bo1.getTechnicalfieldName());
+            if(str11.equals(   bo1.getTechnicalfieldName())) {
                 Class<?> type = field.getType();
                 String typeName = type.getSimpleName();
+                System.out.println("====>field"+field+"==>==typeName:"+typeName+"===>type:"+type);
 
-                String str = "//        @FileShow(fieldName = \"" +bo1.getFieldName()+
-                        "\",datatype = \"" +bo1.getDatatype()+
-                        "\",fieldSize = \"" +bo1.getFieldSize()+
-                        "\",selectType = \"" +bo1.getSelectType()+
-                        "\",notes = \"" +bo1.getNotes()+
+
+                String str = " @FileShow(fieldName = \"" +tostring1(bo1.getFieldName())+
+                        "\",datatype = \"" +tostring1(bo1.getDatatype())+
+                        "\",fieldSize = \"" +tostring1(bo1.getFieldSize())+
+                        "\",selectType = \"" +tostring1(bo1.getSelectType())+
+                        "\",notes = \"" +tostring1(bo1.getNotes())+
                         "\")\n" +
-                        "//        private  " + typeName + " " + field;
-                System.out.println("类："+str);
-                new TxtR().method31("PmAssetMssbacek",new Stringtool().formatbyFastJson(str));
+                        "    private  " + typeName + " " + field.getName() +";";
+               System.out.println("类："+str);
+                new TxtR().method31("PmAssetMssbacek",str);
 
             }
         }
+    }
+    private String tostring1(String str1){
+        if(StringUtils.isEmpty(str1)){
+            return str1;
+        }
+        String string1=       str1.replaceAll("\r|\n", "");
+        return  string1.replaceAll(" ", "");
+
     }
 
 
