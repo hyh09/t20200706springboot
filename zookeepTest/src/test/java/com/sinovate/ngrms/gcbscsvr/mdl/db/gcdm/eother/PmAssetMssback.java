@@ -162,134 +162,128 @@ public class PmAssetMssback implements Serializable {
 	@Conf("341007000000042782308721")//初始化的默认值
 	@FileShow(fieldName = "转固单据ID",datatype = "String",fieldSize = "24",selectType = "必填",notes = "转固单据id")
 	private BigInteger id;
-	@Length(max=255)
+    @FileShow(fieldName = "转固单据ID",datatype = "CHAR",fieldSize = "255.0",selectType = "必输",notes = "null")
+    private  String zgdj;
+    @Conf("20AH000120201")
+	@FileShow(fieldName = "工程编号",datatype = "CHAR",fieldSize = "24.0",selectType = "必输",notes = "null")
+	private  String posid;
+    @Conf("70000144683774")
+	@FileShow(fieldName = "OSS转固资产序号",datatype = "CHAR",fieldSize = "17.0",selectType = "必输",notes = "资产在转固资产中的流水编码，在所有交资表中唯一,前2位是省编码，安徽是11，上海是03;统一目录的2位组织编码")
+	private  Long osszseq;
+	@FileShow(fieldName = "是否确认",datatype = "VARCHAR2",fieldSize = "1.0",selectType = "必输默认为1",notes = "1-是,0-否")
+	private  String agreeflag;
+	@FileShow(fieldName = "建卡方式",datatype = "CHAR",fieldSize = "null",selectType = "必填",notes = "创建卡片的方式，固定资产枚举值：0代表“新建”、1代表“扩容”、2代表“大修”；软件资产枚举值：0代表“0-新增软件/模块”，1代表“1-在原模块中新增功能”。")
+	private  String zzKrzc;
+	@FileShow(fieldName = "原卡片编号",datatype = "CHAR",fieldSize = "20.0",selectType = "固定资产建卡方式为“大修”、“扩容”时，此字段必填；软件资产建卡方式为“1-在原模块中新增功能”时，此字段必填。",notes = "null")
+	private  String zzYzcbm;
+	@FileShow(fieldName = "资产分类",datatype = "CHAR",fieldSize = "8.0",selectType = "必输",notes = "SAP中资产分类,MDM主数据")
+	private  String anlkl;
+	@FileShow(fieldName = "固定资产目录",datatype = "CHAR",fieldSize = "10.0",selectType = "必输",notes = "按照固定资产目录规定的“类”“项”“目”“节”“点”代码填写。管到“节”是8位；管到“点”是10位；MDM主数据")
+	private  String zzKey;
+	@FileShow(fieldName = "资产名称",datatype = "CHAR",fieldSize = "50.0",selectType = "必输",notes = "默认带出固定资产的实物名称,可人工修改")
+	private  String txt50;
+	@FileShow(fieldName = "所在地点",datatype = "CHAR",fieldSize = "50.0",selectType = "必输",notes = "资产存放的具体地点。")
+    @Conf("蒲城县延红东巷居民点FTTH光分箱02")
+	private  String anlhtxt;
+	@FileShow(fieldName = "使用单位",datatype = "VARCHAR2",fieldSize = "12.0",selectType = "必输",notes = "计划建设的区域OU数据，后期不再填写")
+	private  String useareacode;
+	@FileShow(fieldName = "规格、型号、结构",datatype = "CHAR",fieldSize = "50.0",selectType = "必输",notes = "填写固定资产的型号规格等内容，房屋资产按其建筑结构，如“钢筋混凝土结构”“砖木结构”等填写")
+	private  String txa50;
+	@FileShow(fieldName = "数量（面积）",datatype = "QUAN",fieldSize = "13.0",selectType = "必输",notes = "按实际填写；软件资产默认1，不可编辑。")
+	private  Double menge;
+	@FileShow(fieldName = "计量单位",datatype = "UNIT",fieldSize = "3.0",selectType = "必输",notes = "固定资产目录的单位,MDM主数据，不可人工修改")
+	private  String meins;
 
-	private String zgdj;
-//	@Length(max=32)
-	private String posid;
-
-	@Conf("70000144683774")//初始化的默认值
-	@FileShow(fieldName = "OSS转固资产序号",fieldSize = "17",selectType = "必填",notes = "资产在转固资产中的流水编码，在OSS的所有交资表中唯一,前2位省编码,安徽11,上海30")
-	private Long osszseq;
-	@Length(max=1)
-	private String agreeflag;
-	@Length(max=1)
-	private String zzKrzc;
-	@Length(max=32)
-	private String zzYzcbm;
-	@Length(max=50)
-	private String zzLicense;
-	@Length(max=1)
-	private String zzFz07;
-
-	private java.util.Date zzLdqrq;
-	@Length(max=16)
-	private String zzRjjsglbm;
-	@Length(max=16)
-	private String zzRjjswhbm;
-
-	@Conf("")//初始化的默认值
-	@FileShow(fieldName = "出保約定期限（月）",datatype = "CHAR",fieldSize = "8",selectType = "非必填",notes = "02应用类软件选填")
-	private String zzCbrq;
-
-	private Double zzCbydfl;
-	@Length(max=16)
-	private String anlkl;
-	@Length(max=24)
-	private String zzKey;
-	@Length(max=64)
-	private String txt50;
-	@Length(max=64)
-	private String anlhtxt;
-	@Length(max=24)
-	private String useareacode;
-	@Length(max=64)
-	private String txa50;
-
-	private Double menge;
-	@Length(max=32)
-	private String meins;
-
-	private java.util.Date aktiv;
-	@Length(max=48)
-	private String herst;
-	@Length(max=16)
-	private String ord41;
-	@Length(max=64)
-	private String spectype;
-
-	private Double urwrt;
-	@Length(max=1)
-	private String zzKhzc;
-	@Length(max=64)
-	private String zzKhmc;
-	@Length(max=16)
-	private String ord43;
-	@Length(max=16)
-	private String zzZclb;
-	@Length(max=1)
-	private String zzYfyzc;
-	@Length(max=32)
-	private String zzYfgcbm;
-	@Length(max=16)
-	private String zzSwgl;
-	@Length(max=16)
-	private String zzGly;
-	@Length(max=16)
-	private String zzSybm;
-	@Length(max=16)
-	private String zzBgy;
-	@Length(max=16)
-	private String raumn;
-	@Length(max=16)
-	private String kostl;
-	@Length(max=32)
-	private String physicalId;
-	@Length(max=16)
-	private String zzQybm;
-	@Length(max=16)
-	private String zzQxgs;
-	@Length(max=16)
-	private String zzYxzx;
-	@Length(max=64)
-	private String zzYytid;
-	@Length(max=32)
-	private String zzJzid;
-	@Length(max=256)
-	private String basestatname;
-	@Length(max=50)
-	private String zzBanz;
-
-	private Double zurwrt4;
-
-	private Double zurwrt2;
-
-	private Double zurwrt3;
-
-	private Long total;
-	@Length(max=16)
-	private String anln1;
-	@Length(max=16)
-	private String prctr;
-	@Length(max=64)
-	private String zzChqnum;
-	@Length(max=16)
-	private String zzZjyy;
-	@Length(max=4)
-	private String ndjar;
-
-	private Float jzzb;
-	@Length(max=64)
-	private String zzFssb;
-	@Length(max=128)
-	private String zzBz;
-
+	@FileShow(fieldName = "资本化日期",datatype = "DATS",fieldSize = "8.0",selectType = "非必填",notes = "为资产开始计提资产折旧的依据,工辅系统填写。")
+	private  Date aktiv;
+	@FileShow(fieldName = "生产厂家",datatype = "CHAR",fieldSize = "30.0",selectType = "必输",notes = "填写主要设备的制造商全称")
+	private  String herst;
+	@FileShow(fieldName = "资产归属",datatype = "CHAR",fieldSize = "4.0",selectType = "必输",notes = "按照“A001一级干线”“A002二")
+	private  String ord41;
+	@FileShow(fieldName = "专业属性",datatype = "VARCHAR2",fieldSize = "64.0",selectType = "必输",notes = "枚举项包括（A001一级干线，A002二级干线，A003本地网及其他）")
+	private  String spectype;
+	@FileShow(fieldName = "设备采购合同价（元）（不含增值税）",datatype = "CURR",fieldSize = "13.0",selectType = "必输",notes = "固定资产的购置价值")
+	private  Double urwrt;
+	@FileShow(fieldName = "是否客户端资产",datatype = "CHAR",fieldSize = "1.0",selectType = "必填",notes = "客户端资产")
+	private  String zzKhzc;
+	@FileShow(fieldName = "客户端名称",datatype = "CHAR",fieldSize = "60.0",selectType = "是客户端资产则必填",notes = "客户端的名称")
+	private  String zzKhmc;
+	@FileShow(fieldName = "资产性质",datatype = "CHAR",fieldSize = "4.0",selectType = "必输",notes = "资产的使用状态,MDM主数据，默认C001生产用")
+	private  String ord43;
+	@FileShow(fieldName = "作业成本资产类别",datatype = "CHAR",fieldSize = "6.0",selectType = "必输",notes = "用于维护ABC作业成本法需要的资产类别，以识别资产的网络元素属性，具体类别参见集团公司作业成本核算办法")
+	private  String zzZclb;
+	@FileShow(fieldName = "是否研发用资产",datatype = "CHAR",fieldSize = "1.0",selectType = "非必输",notes = "资产用于研发项目")
+	private  String zzYfyzc;
+	@FileShow(fieldName = "研发用工程编码",datatype = "CHAR",fieldSize = "24.0",selectType = "非必输，若研发资产用有填，则必填",notes = "研发项目的WBS")
+	private  String zzYfgcbm;
+	@FileShow(fieldName = "资产管理部门",datatype = "CHAR",fieldSize = "10.0",selectType = "必输",notes = "对资产进行实物管理的部门全称,统一目录，软件资产交资表叫“软件管理部门”")
+	private  String zzSwgl;
+	@FileShow(fieldName = "资产管理员",datatype = "CHAR",fieldSize = "14.0",selectType = "必输",notes = "资产具体管理人员,统一目录8位数字编码+@AH；上海，就是@SH；外协人员可能是11位数字编码，软件资产交资表叫“管理责任人”")
+	private  String zzGly;
+	@FileShow(fieldName = "使用部门",datatype = "CHAR",fieldSize = "10.0",selectType = "必输",notes = "资产实际使用部门全称,统一目录，软件资产交资表叫“软件需求部门”")
+	private  String zzSybm;
+	@FileShow(fieldName = "保管员",datatype = "CHAR",fieldSize = "14.0",selectType = "必输",notes = "资产具体保管人员,统一目录8位数字编码+@AH；上海，就是@SH；外协人员可能是11位数字编码，软件资产叫“建设维护责任人”")
+	private  String zzBgy;
+	@FileShow(fieldName = "使用人",datatype = "CHAR",fieldSize = "14.0",selectType = "必输",notes = "资产具体使用人员,统一目录8位数字编码+@AH；上海，就是@SH；外协人员可能是11位数字编码，软件资产叫“需求部门责任人”")
+	private  String raumn;
+	@FileShow(fieldName = "成本中心",datatype = "CHAR",fieldSize = "10.0",selectType = "必输",notes = "按照基础核算系统中成本中心模块的主数据规范填写,MDM主数据")
+	private  String kostl;
+	@FileShow(fieldName = "区域编码",datatype = "CHAR",fieldSize = "10.0",selectType = "非必输",notes = "划小字段，所在区域地点编码,资产的具体所在位置编码，相当于地址范围的标准化；MDM主数据")
+	private  String zzQybm;
+	@FileShow(fieldName = "区县分公司",datatype = "CHAR",fieldSize = "8.0",selectType = "非必输",notes = "MDM主数据")
+	private  String zzQxgs;
+	@FileShow(fieldName = "支局",datatype = "CHAR",fieldSize = "8.0",selectType = "非必输",notes = "MDM主数据")
+	private  String zzYxzx;
+	@FileShow(fieldName = "营业厅机构ID",datatype = "CHAR",fieldSize = "50.0",selectType = "非必输",notes = "MDM主数据")
+	private  String zzYytid;
+	@FileShow(fieldName = "基站（机房）编码",datatype = "CHAR",fieldSize = "30.0",selectType = "非必输",notes = "自动带出资源的基站编码，可人工编辑")
+	private  String zzJzid;
+	@FileShow(fieldName = "基站（机房）名称",datatype = "VARCHAR2",fieldSize = "256.0",selectType = "基站编码有填则必输",notes = "自动带出资源的基站名称，可人工编辑")
+	private  String basestatname;
+	@FileShow(fieldName = "班组",datatype = "CHAR",fieldSize = "50.0",selectType = "非必输",notes = "MDM主数据")
+	private  String zzBanz;
+	@FileShow(fieldName = "设备投资（元）",datatype = "CURR",fieldSize = "13.0",selectType = "不填",notes = "null")
+	private  Double zurwrt4;
+	@FileShow(fieldName = "建安投资（元）",datatype = "CURR",fieldSize = "13.0",selectType = "不填",notes = "null")
+	private  Double zurwrt2;
+	@FileShow(fieldName = "待摊投资（元）",datatype = "CURR",fieldSize = "13.0",selectType = "不填",notes = "null")
+	private  Double zurwrt3;
+	@FileShow(fieldName = "合计（元）",datatype = "CURR",fieldSize = "13.0",selectType = "不填",notes = "null")
+	private  Long total;
+	@FileShow(fieldName = "资产卡片号",datatype = "CHAR",fieldSize = "12.0",selectType = "不填",notes = "资产卡片的编号，财务核算系统自动填写")
+	private  String anln1;
+	@FileShow(fieldName = "利润中心（组）",datatype = "CHAR",fieldSize = "10.0",selectType = "必输",notes = "工辅系统填写,MDM主数据")
+	private  String prctr;
+	@FileShow(fieldName = "产权凭证",datatype = "CHAR",fieldSize = "60.0",selectType = "非必输",notes = "填写房屋及建筑物的房产证或土地使用证车辆行驶证号码。其他设备可不填写")
+	private  String zzChqnum;
+	@FileShow(fieldName = "增加原因",datatype = "CHAR",fieldSize = "2.0",selectType = "非必输",notes = "资产的增加原因,固定资产默认”01在建工程转入”,软件资产默认“02购置”")
+	private  String zzZjyy;
+	@FileShow(fieldName = "折旧年限",datatype = "CHAR",fieldSize = "3.0",selectType = "必输",notes = "固定资产根据资产目录带出，不可修改。无形资产默认”10”，可修改。")
+	private  String ndjar;
+	@FileShow(fieldName = "其中：减值准备",datatype = "NUMBER(17,4)",fieldSize = "null",selectType = "非必输",notes = "null")
+	private  Float jzzb;
+	@FileShow(fieldName = "附属设备及附件",datatype = "CHAR",fieldSize = "60.0",selectType = "非必输",notes = "资产的附属设备及附件")
+	private  String zzFssb;
+	@FileShow(fieldName = "备注",datatype = "CHAR",fieldSize = "60.0",selectType = "非必输",notes = "资产附加说明")
+	private  String zzBz;
+	@FileShow(fieldName = "License号",datatype = "CHAR",fieldSize = "50.0",selectType = "非必填",notes = "01通用类软件选填")
+	private  String zzLicense;
+	@FileShow(fieldName = "许可方式",datatype = "CHAR",fieldSize = "1.0",selectType = "非必填",notes = "01通用类软件选填")
+	private  String zzFz07;
+	@FileShow(fieldName = "License到期日期",datatype = "DATS",fieldSize = "8.0",selectType = "非必填",notes = "01通用类软件选填")
+	private  Date zzLdqrq;
+	@FileShow(fieldName = "软件建设管理部门",datatype = "CHAR",fieldSize = "16.0",selectType = "非必填",notes = "传输空值，工辅自动添加；MDM主数据")
+	private  String zzRjjsglbm;
+	@FileShow(fieldName = "软件建设维护部门",datatype = "CHAR",fieldSize = "16.0",selectType = "非必填",notes = "为软件建设维护责任人所属的人员组织机构的部门，需依据软件建设维护责任人自动带出。")
+	private  String zzRjjswhbm;
+	@FileShow(fieldName = "出保约定期限（月）",datatype = "CHAR",fieldSize = "8.0",selectType = "非必填",notes = "02应用类软件选填")
+	private  String zzCbrq;
+	@FileShow(fieldName = "出保约定费率",datatype = "DEC",fieldSize = "(5,2)",selectType = "非必填",notes = "02应用类软件选填，两位小数，不用带%")
+	private  Double zzCbydfl;
+	@FileShow(fieldName = "出保约定费率",datatype = "DEC",fieldSize = "(5,2)",selectType = "非必填",notes = "02应用类软件选填，两位小数，不用带%")
 	private java.util.Date createDate;
-
+	@FileShow(fieldName = "出保约定费率",datatype = "DEC",fieldSize = "(5,2)",selectType = "非必填",notes = "02应用类软件选填，两位小数，不用带%")
 	private java.util.Date editDate;
-
-
-
 
 
 
