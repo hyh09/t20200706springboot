@@ -13,10 +13,10 @@ public class RequestforreferenceBo {
     @ColumnConfig(descriptionyun = "字段名称")
     private  String fieldName;
 
-    @ColumnConfig(descriptionyun = "技术字段名")
+    @ColumnConfig(descriptionyun = "技术字段名")  //可以获取
     private String TechnicalfieldName;
 
-    @ColumnConfig(descriptionyun = "数据类型")
+    @ColumnConfig(descriptionyun = "数据类型")// 类文件可以获取
     private String  datatype;
     @ColumnConfig(descriptionyun = "字段长度")
     private  String fieldSize;
