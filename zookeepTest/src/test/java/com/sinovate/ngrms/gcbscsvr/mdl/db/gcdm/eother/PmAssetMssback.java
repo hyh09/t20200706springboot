@@ -288,6 +288,16 @@ public class PmAssetMssback implements Serializable {
 
 	private java.util.Date editDate;
 
+
+
+
+
+
+
+
+
+
+
 	public PmAssetMssback() {
 
 
