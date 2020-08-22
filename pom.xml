@@ -10,6 +10,7 @@
     <modules>
         <module>spring02web</module>
         <module>HbaseTest</module>
+        <module>zookeepTest</module>
     </modules>
 
     <packaging>pom</packaging>

@@ -1,8 +1,8 @@
 package com.utltl.exceltool.excel4j.binding.impl;
 
 
-import com.demoweb.excelutli.excel4j.binding.Excel4JavaRowMapper;
-import com.demoweb.excelutli.excel4j.usermodel.ExcelRow;
+import com.utltl.exceltool.excel4j.binding.Excel4JavaRowMapper;
+import com.utltl.exceltool.excel4j.usermodel.ExcelRow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -13,6 +13,10 @@ import com.utltl.exceltool.ExportExcelyunUtils;
 import com.utltl.exceltool.beansvc.Conf;
 import com.utltl.exceltool.beansvc.FileShow;
 import com.utltl.exceltool.beansvc.JsonDateValueProcessor;
+import com.utltl.exceltool.excel4j.binding.Excel2Bean;
+import com.utltl.exceltool.excel4j.binding.Excel2BeanRowMapper;
+import com.utltl.exceltool.excel4j.binding.impl.DefaultExcel4JavaRowMapper;
+import com.utltl.exceltool.excel4j.binding.impl.Excel4JavaImpl;
 import com.utltl.exceltool.mobansanm.RequestforreferenceBo;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
@@ -21,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.util.*;
@@ -150,4 +155,88 @@ public class PmAssetMssbackTest {
         return bakMap;
     }
 
+
+
+
+    /**
+     *
+     * @return
+     */
+    @Test
+    public RequestforreferenceBo   getExcel(){
+
+
+        String fileName = this.getClass().getClassLoader().getResource("ruexcel/01.xlsx").getPath();//获取文件路径
+        //String fileUtl = this.getClass().getResource("3ma.xlsx").getFile();
+        File targetFile = new File(fileName);//copyFile(filename, inputStream);
+        Excel2Bean e4j = new Excel4JavaImpl();
+        e4j.createExcelBook(targetFile);
+        Excel2BeanRowMapper<RequestforreferenceBo> rowMapper = new AssetDetailExcelBoRowMapperExtendDefault();
+        //从excel模板中转化为excelBo
+        List<RequestforreferenceBo> assetDetailExcelBos = e4j.toBeans("Sheet1", 1, Integer.MAX_VALUE, rowMapper);
+//        LOGGER.info("assetDetailExcelBos==>"+assetDetailExcelBos);
+
+
+
+        for(RequestforreferenceBo bo:assetDetailExcelBos){
+            String fildname= bo.getTechnicalfieldName();
+          String fildname2=   CamelNameUtils.camelName(fildname);
+            System.out.println("====>"+fildname+"=====>"+fildname2);
+            tomobang(bo);
+
+        }
+
+
+        return  null;
+
+    }
+//	@FileShow(fieldName = "出保約定期限（月）",datatype = "CHAR",fieldSize = "8",selectType = "非必填",notes = "02应用类软件选填")
+//private String zzCbrq;
+    private void tomobang(RequestforreferenceBo bo1) {
+
+
+
+        Class<?> clz = new PmAssetMssbackTest().getClass();
+        //  Object obj = bean.getClass().newInstance();
+
+        Field[] fields = clz.getDeclaredFields();
+        for (Field field : fields) {
+            if(CamelNameUtils.underscoreName(field.getName()).equals(   bo1.getTechnicalfieldName())) {
+                Class<?> type = field.getType();
+                String typeName = type.getSimpleName();
+
+                String str = "//        @FileShow(fieldName = \"" +bo1.getFieldName()+
+                        "\",datatype = \"" +bo1.getDatatype()+
+                        "\",fieldSize = \"" +bo1.getFieldSize()+
+                        "\",selectType = \"" +bo1.getSelectType()+
+                        "\",notes = \"" +bo1.getNotes()+
+                        "\")\n" +
+                        "//        private  " + typeName + " " + field;
+                System.out.println("类："+str);
+                new TxtR().method31("PmAssetMssbacek",new Stringtool().formatbyFastJson(str));
+
+            }
+        }
+    }
+
+
+    class AssetDetailExcelBoRowMapperExtendDefault extends DefaultExcel4JavaRowMapper<RequestforreferenceBo> {
+
+        @Override
+        protected RequestforreferenceBo createBean() {
+            return new RequestforreferenceBo();
+        }
+
+        @Override
+        protected RequestforreferenceBo postRow2Bean(RequestforreferenceBo bean) {
+            return bean;
+        }
+    }
+
+
+
+
+
 }
+
+

@@ -112,6 +112,35 @@ public class TxtR
 
     }
 
+
+
+    public static void method31(String filename, String conent)  {
+        FileWriter fw = null;
+        String path="d:\\workbook\\"+filename+".txt";
+        File file = new File(path);
+//        if(file.exists()){
+//            file.delete();
+//            System.out.println("文件存在删除！");
+//        }
+//        try {
+//            fw = new FileWriter(file, true);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+  //      }
+        PrintWriter pw = new PrintWriter(fw);
+        pw.println(conent);
+        pw.flush();
+        try {
+            fw.flush();
+            pw.close();
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     public static void fileChaseFW(String filePath, String content)
     {
         try
