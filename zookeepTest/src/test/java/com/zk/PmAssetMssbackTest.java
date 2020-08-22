@@ -126,9 +126,18 @@ public class PmAssetMssbackTest {
                 bo.setTechnicalfieldName( CamelNameUtils.underscoreName(field.getName()) );// 和请求的入参一个方法
 
                //
-                bo.setSelectType(fs.selectType());
+
                 bo.setFieldSize(fs.fieldSize());
+                if(StringUtils.isEmpty(fs.fieldSize()) ||fs.fieldSize().equals("null")){
+                    bo.setFieldSize("");//长度
+                }
                 bo.setNotes(fs.notes());
+
+                bo.setSelectType(fs.selectType());
+                System.out.println("必填的项目："+fs.selectType());
+                if(StringUtils.isEmpty(fs.selectType()) || fs.selectType().equals("null")){
+                    bo.setSelectType("");
+                }
 
                 requestforreferenceBoList.add(bo);
 
@@ -145,7 +154,7 @@ public class PmAssetMssbackTest {
 
 
 
-    private Map<String,Object> modfyMap(Map<String,Object> map){
+    public Map<String,Object> modfyMap(Map<String,Object> map){
         Map<String,Object> bakMap = new HashMap<String, Object>();
         if(map.size()==0){
             LOGGER.info("入参的结果集map为空！");
@@ -168,9 +177,16 @@ public class PmAssetMssbackTest {
      */
     @Test
     public void   getExcel(){
+          this.Rucan1test("ruexcel/01.xlsx", new PmAssetMssback());
+    }
 
 
-        String fileName = this.getClass().getClassLoader().getResource("ruexcel/01.xlsx").getPath();//获取文件路径
+
+
+
+    public   <T> void Rucan1test(String path1,T bean){
+
+        String fileName = this.getClass().getClassLoader().getResource(path1).getPath();//获取文件路径
         //String fileUtl = this.getClass().getResource("3ma.xlsx").getFile();
         File targetFile = new File(fileName);//copyFile(filename, inputStream);
         Excel2Bean e4j = new Excel4JavaImpl();
@@ -186,12 +202,9 @@ public class PmAssetMssbackTest {
 //            String fildname= bo.getTechnicalfieldName();
 //          String fildname2=   CamelNameUtils.camelName(fildname);
 //            System.out.println("====>"+fildname+"=====>"+fildname2);
-            tomobang(bo,new PmAssetMssback());
+            tomobang(bo,bean);
 
         }
-
-
-
     }
 //	@FileShow(fieldName = "出保約定期限（月）",datatype = "CHAR",fieldSize = "8",selectType = "非必填",notes = "02应用类软件选填")
 //private String zzCbrq;
@@ -199,7 +212,9 @@ public class PmAssetMssbackTest {
 
 
 
-        Class<?> clz = new PmAssetMssback().getClass();
+        Class<?> clz =bean.getClass();
+       String fileName= clz.getSimpleName();
+       System.out.println("文件的名字："+fileName);
         //  Object obj = bean.getClass().newInstance();
 
         Field[] fields = clz.getDeclaredFields();
@@ -223,7 +238,8 @@ public class PmAssetMssbackTest {
                         "\")\n" +
                         "    private  " + typeName + " " + field.getName() +";";
                System.out.println("类："+str);
-                new TxtR().method31("PmAssetMssbacek",str);
+
+                new TxtR().method31(fileName,str);
 
             }
         }
