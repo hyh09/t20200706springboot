@@ -1,0 +1,1418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean class="com.sinovate.ngrms.comm.ptfcore.frmwork.spring.SpringContextHolder"/>
+
+    <!-- 2. 使用外部属性文件的属性，配置数据库的连接-->
+    <!-- 协作表 -->
+    <bean id="dataSource_task" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="gmar_conf"></property>
+        <property name="password" value="Eck_Wpx_1050_Dnx"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhconf1:3436:rmconfpr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+
+    <!--北京 -->
+	<bean id="dataSource_11" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="username" value="ITSP_APPSM_BJJ"></property>
+		<property name="password" value="Ajko_GP_XL#bjj1983"></property>
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@smrhdata9:3436:rmdt05pr1"></property>
+		
+		<property name="initialSize" value="10" />
+		<property name="minIdle" value="50" />
+		<property name="maxActive" value="200" />
+		
+		<property name="maxWait" value="60000" />
+		
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+		
+		<property name="filters" value="stat,log4j" />
+		
+		<property name="removeAbandoned" value="false" />
+		<property name="removeAbandonedTimeout" value="1800" />
+		<property name="logAbandoned" value="true" />
+		
+		<property name="validationQuery" value="select 1 from dual" />
+		
+		<property name="testWhileIdle" value="true" />
+		
+		<property name="testOnBorrow" value="false" />
+		
+		<property name="testOnReturn" value="false" />
+
+	</bean>
+    <!-- 天津  -->
+    <bean id="dataSource_12" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <property name="username" value="ITSP_APPSM_TJJ"></property>
+    <property name="password" value="Ajko_GP_XL#tjj1983"></property>
+    <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+    <property name="url" value="jdbc:oracle:thin:@smrhdata29:3436:rmdt15pr1"></property>
+    <!-- 配置初始化大小、最小、最大 -->
+    <property name="initialSize" value="10" />
+    <property name="minIdle" value="50" />
+    <property name="maxActive" value="200" />
+    <!-- 配置获取连接等待超时的时间 -->
+    <property name="maxWait" value="60000" />
+    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    <property name="minEvictableIdleTimeMillis" value="300000" />
+    <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+    <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+    <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+    <!-- 配置监控统计拦截的filters -->
+    <property name="filters" value="stat,log4j" />
+    <!-- 连接泄露监测 -->
+    <property name="removeAbandoned" value="false" />
+    <property name="removeAbandonedTimeout" value="1800" />
+    <property name="logAbandoned" value="true" />
+    <!-- 数据库加密 -->
+    <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+    <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+    <property name="validationQuery" value="select 1 from dual" />
+    <!-- 申请连接的时候检测 -->
+    <property name="testWhileIdle" value="true" />
+    <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+    <property name="testOnBorrow" value="false" />
+    <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+    <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 河北 -->
+    <bean id="dataSource_13" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <property name="username" value="ITSP_APPSM_HBJ"></property>
+    <property name="password" value="Ajko_GP_XL#hbj1983"></property>
+    <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+    <property name="url" value="jdbc:oracle:thin:@smrhdata29:3436:rmdt15pr1"></property>
+    <!-- 配置初始化大小、最小、最大 -->
+    <property name="initialSize" value="10" />
+    <property name="minIdle" value="50" />
+    <property name="maxActive" value="200" />
+    <!-- 配置获取连接等待超时的时间 -->
+    <property name="maxWait" value="60000" />
+    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    <property name="minEvictableIdleTimeMillis" value="300000" />
+    <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+    <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+    <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+    <!-- 配置监控统计拦截的filters -->
+    <property name="filters" value="stat,log4j" />
+    <!-- 连接泄露监测 -->
+    <property name="removeAbandoned" value="false" />
+    <property name="removeAbandonedTimeout" value="1800" />
+    <property name="logAbandoned" value="true" />
+    <!-- 数据库加密 -->
+    <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+    <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+    <property name="validationQuery" value="select 1 from dual" />
+    <!-- 申请连接的时候检测 -->
+    <property name="testWhileIdle" value="true" />
+    <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+    <property name="testOnBorrow" value="false" />
+    <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+    <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 山西 -->
+    <bean id="dataSource_14" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <property name="username" value="ITSP_APPSM_SXJ"></property>
+    <property name="password" value="Ajko_GP_XL#sxj1983"></property>
+    <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+    <property name="url" value="jdbc:oracle:thin:@smrhdata27:3436:rmdt14pr1"></property>
+    <!-- 配置初始化大小、最小、最大 -->
+    <property name="initialSize" value="10" />
+    <property name="minIdle" value="50" />
+    <property name="maxActive" value="200" />
+    <!-- 配置获取连接等待超时的时间 -->
+    <property name="maxWait" value="60000" />
+    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    <property name="minEvictableIdleTimeMillis" value="300000" />
+    <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+    <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+    <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+    <!-- 配置监控统计拦截的filters -->
+    <property name="filters" value="stat,log4j" />
+    <!-- 连接泄露监测 -->
+    <property name="removeAbandoned" value="false" />
+    <property name="removeAbandonedTimeout" value="1800" />
+    <property name="logAbandoned" value="true" />
+    <!-- 数据库加密 -->
+    <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+    <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+    <property name="validationQuery" value="select 1 from dual" />
+    <!-- 申请连接的时候检测 -->
+    <property name="testWhileIdle" value="true" />
+    <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+    <property name="testOnBorrow" value="false" />
+    <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+    <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 内蒙古 -->
+    <bean id="dataSource_15" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <property name="username" value="ITSP_APPSM_NMGM"></property>
+    <property name="password" value="Ajko_GP_XL#nmgm1983"></property>
+    <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+    <property name="url" value="jdbc:oracle:thin:@smrhdata25:3436:rmdt13pr1"></property>
+    <!-- 配置初始化大小、最小、最大 -->
+    <property name="initialSize" value="10" />
+    <property name="minIdle" value="50" />
+    <property name="maxActive" value="200" />
+    <!-- 配置获取连接等待超时的时间 -->
+    <property name="maxWait" value="60000" />
+    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    <property name="minEvictableIdleTimeMillis" value="300000" />
+    <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+    <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+    <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+    <!-- 配置监控统计拦截的filters -->
+    <property name="filters" value="stat,log4j" />
+    <!-- 连接泄露监测 -->
+    <property name="removeAbandoned" value="false" />
+    <property name="removeAbandonedTimeout" value="1800" />
+    <property name="logAbandoned" value="true" />
+    <!-- 数据库加密 -->
+    <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+    <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+    <property name="validationQuery" value="select 1 from dual" />
+    <!-- 申请连接的时候检测 -->
+    <property name="testWhileIdle" value="true" />
+    <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+    <property name="testOnBorrow" value="false" />
+    <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+    <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 辽宁 -->
+    <bean id="dataSource_21" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <property name="username" value="ITSP_APPSM_LNL"></property>
+    <property name="password" value="Ajko_GP_XL#lnl1983"></property>
+    <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+    <property name="url" value="jdbc:oracle:thin:@smrhdata31:3436:rmdt16pr1"></property>
+    <!-- 配置初始化大小、最小、最大 -->
+    <property name="initialSize" value="10" />
+    <property name="minIdle" value="50" />
+    <property name="maxActive" value="200" />
+    <!-- 配置获取连接等待超时的时间 -->
+    <property name="maxWait" value="60000" />
+    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    <property name="minEvictableIdleTimeMillis" value="300000" />
+    <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+    <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+    <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+    <!-- 配置监控统计拦截的filters -->
+    <property name="filters" value="stat,log4j" />
+    <!-- 连接泄露监测 -->
+    <property name="removeAbandoned" value="false" />
+    <property name="removeAbandonedTimeout" value="1800" />
+    <property name="logAbandoned" value="true" />
+    <!-- 数据库加密 -->
+    <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+    <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+    <property name="validationQuery" value="select 1 from dual" />
+    <!-- 申请连接的时候检测 -->
+    <property name="testWhileIdle" value="true" />
+    <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+    <property name="testOnBorrow" value="false" />
+    <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+    <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 吉林 -->
+    <bean id="dataSource_22" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <property name="username" value="ITSP_APPSM_JLJ"></property>
+    <property name="password" value="Ajko_GP_XL#jlj1983"></property>
+    <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+    <property name="url" value="jdbc:oracle:thin:@smrhdata27:3436:rmdt14pr1"></property>
+    <!-- 配置初始化大小、最小、最大 -->
+    <property name="initialSize" value="10" />
+    <property name="minIdle" value="50" />
+    <property name="maxActive" value="200" />
+    <!-- 配置获取连接等待超时的时间 -->
+    <property name="maxWait" value="60000" />
+    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    <property name="minEvictableIdleTimeMillis" value="300000" />
+    <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+    <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+    <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+    <!-- 配置监控统计拦截的filters -->
+    <property name="filters" value="stat,log4j" />
+    <!-- 连接泄露监测 -->
+    <property name="removeAbandoned" value="false" />
+    <property name="removeAbandonedTimeout" value="1800" />
+    <property name="logAbandoned" value="true" />
+    <!-- 数据库加密 -->
+    <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+    <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+    <property name="validationQuery" value="select 1 from dual" />
+    <!-- 申请连接的时候检测 -->
+    <property name="testWhileIdle" value="true" />
+    <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+    <property name="testOnBorrow" value="false" />
+    <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+    <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 黑龙江 -->
+    <bean id="dataSource_23" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <property name="username" value="ITSP_APPSM_HLJH"></property>
+    <property name="password" value="Ajko_GP_XL#hljh1983"></property>
+    <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+    <property name="url" value="jdbc:oracle:thin:@smrhdata33:3436:rmdt17pr1"></property>
+    <!-- 配置初始化大小、最小、最大 -->
+    <property name="initialSize" value="10" />
+    <property name="minIdle" value="50" />
+    <property name="maxActive" value="200" />
+    <!-- 配置获取连接等待超时的时间 -->
+    <property name="maxWait" value="60000" />
+    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    <property name="minEvictableIdleTimeMillis" value="300000" />
+    <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+    <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+    <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+    <!-- 配置监控统计拦截的filters -->
+    <property name="filters" value="stat,log4j" />
+    <!-- 连接泄露监测 -->
+    <property name="removeAbandoned" value="false" />
+    <property name="removeAbandonedTimeout" value="1800" />
+    <property name="logAbandoned" value="true" />
+    <!-- 数据库加密 -->
+    <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+    <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+    <property name="validationQuery" value="select 1 from dual" />
+    <!-- 申请连接的时候检测 -->
+    <property name="testWhileIdle" value="true" />
+    <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+    <property name="testOnBorrow" value="false" />
+    <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+    <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 上海 -->
+    <!--<bean id="dataSource_31" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
+    <!--<property name="username" value="itsp_appsm_shh"></property>-->
+    <!--<property name="password" value="Ajko_GP_XL#shh1983"></property>-->
+    <!--<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>-->
+    <!--<property name="url" value="jdbc:oracle:thin:@(description=(address_list= (address=(host=smrhdata3) (protocol=tcp)(port=3436))(address=(host=smrhdata4)(protocol=tcp) (port=3436)) (load_balance=on)(failover=on))(connect_data=(service_name= rmdt02pr))(SERVER=DEDICATED))"></property>-->
+    <!--&lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;-->
+    <!--<property name="initialSize" value="10" />-->
+    <!--<property name="minIdle" value="50" />-->
+    <!--<property name="maxActive" value="200" />-->
+    <!--&lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
+    <!--<property name="maxWait" value="60000" />-->
+    <!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
+    <!--<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
+    <!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
+    <!--<property name="minEvictableIdleTimeMillis" value="300000" />-->
+    <!--&lt;!&ndash; 打开PSCache，并且指定每个连接上PSCache的大小 &ndash;&gt;-->
+    <!--<property name="poolPreparedStatements" value="true" />&lt;!&ndash; 如果使用Mysql则 建议 设置为false &ndash;&gt;-->
+    <!--<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />-->
+    <!--&lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;-->
+    <!--<property name="filters" value="stat,log4j" />-->
+    <!--&lt;!&ndash; 连接泄露监测 &ndash;&gt;-->
+    <!--<property name="removeAbandoned" value="false" />-->
+    <!--<property name="removeAbandonedTimeout" value="1800" />-->
+    <!--<property name="logAbandoned" value="true" />-->
+    <!--&lt;!&ndash; 数据库加密 &ndash;&gt;-->
+    <!--&lt;!&ndash; <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> &ndash;&gt;-->
+
+    <!--&lt;!&ndash; 用来检测连接是否有效的sql，要求是一个查询语句&ndash;&gt;-->
+    <!--<property name="validationQuery" value="select 1 from dual" />-->
+    <!--&lt;!&ndash; 申请连接的时候检测 &ndash;&gt;-->
+    <!--<property name="testWhileIdle" value="true" />-->
+    <!--&lt;!&ndash; 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 &ndash;&gt;-->
+    <!--<property name="testOnBorrow" value="false" />-->
+    <!--&lt;!&ndash; 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  &ndash;&gt;-->
+    <!--<property name="testOnReturn" value="false" />-->
+
+    <!--</bean>-->
+    <!-- 江苏 -->
+    <bean id="dataSource_32" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="Itsp_appsm_jss"></property>
+        <property name="password" value="Ajko_GP_XL#jss1983"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhdata23:3436:rmdt12pr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 浙江 -->
+    <bean id="dataSource_33" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="ITSP_APPSM_ZJZ"></property>
+        <property name="password" value="Ajko_GP_XL#zjz1983"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhdata9:3436:rmdt05pr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 安徽 -->
+    <!--<bean id="dataSource_34" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
+    <!--<property name="username" value="ITSP_APPSM_AHW"></property>-->
+    <!--<property name="password" value="Appsm_ahw#123456"></property>-->
+    <!--<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>-->
+    <!--<property name="url" value="jdbc:oracle:thin:@(description=(address_list= (address=(host=smrhdata1) (protocol=tcp)(port=3436))(address=(host=smrhdata2)(protocol=tcp) (port=3436)) (load_balance=on)(failover=on))(connect_data=(service_name= rmdt01pr))(SERVER=DEDICATED))"></property>-->
+    <!--&lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;-->
+    <!--<property name="initialSize" value="10" />-->
+    <!--<property name="minIdle" value="50" />-->
+    <!--<property name="maxActive" value="200" />-->
+    <!--&lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
+    <!--<property name="maxWait" value="60000" />-->
+    <!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
+    <!--<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
+    <!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
+    <!--<property name="minEvictableIdleTimeMillis" value="300000" />-->
+    <!--&lt;!&ndash; 打开PSCache，并且指定每个连接上PSCache的大小 &ndash;&gt;-->
+    <!--<property name="poolPreparedStatements" value="true" />&lt;!&ndash; 如果使用Mysql则 建议 设置为false &ndash;&gt;-->
+    <!--<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />-->
+    <!--&lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;-->
+    <!--<property name="filters" value="stat,log4j" />-->
+    <!--&lt;!&ndash; 连接泄露监测 &ndash;&gt;-->
+    <!--<property name="removeAbandoned" value="false" />-->
+    <!--<property name="removeAbandonedTimeout" value="1800" />-->
+    <!--<property name="logAbandoned" value="true" />-->
+    <!--&lt;!&ndash; 数据库加密 &ndash;&gt;-->
+    <!--&lt;!&ndash; <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> &ndash;&gt;-->
+
+    <!--&lt;!&ndash; 用来检测连接是否有效的sql，要求是一个查询语句&ndash;&gt;-->
+    <!--<property name="validationQuery" value="select 1 from dual" />-->
+    <!--&lt;!&ndash; 申请连接的时候检测 &ndash;&gt;-->
+    <!--<property name="testWhileIdle" value="true" />-->
+    <!--&lt;!&ndash; 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 &ndash;&gt;-->
+    <!--<property name="testOnBorrow" value="false" />-->
+    <!--&lt;!&ndash; 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  &ndash;&gt;-->
+    <!--<property name="testOnReturn" value="false" />-->
+
+    <!--</bean>-->
+    <!--&lt;!&ndash; 福建 &ndash;&gt;-->
+    <!--<bean id="dataSource_35" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
+    <!--<property name="username" value="ITSP_APPSM_FJM"></property>-->
+    <!--<property name="password" value="Appsm_fjm#123456"></property>-->
+    <!--<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>-->
+    <!--<property name="url" value="jdbc:oracle:thin:@(description=(address_list= (address=(host=smrhdata15) (protocol=tcp)(port=3436))(address=(host=smrhdata16)(protocol=tcp) (port=3436)) (load_balance=on)(failover=on))(connect_data=(service_name= rmdt08pr))(SERVER=DEDICATED))"></property>-->
+    <!--&lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;-->
+    <!--<property name="initialSize" value="10" />-->
+    <!--<property name="minIdle" value="50" />-->
+    <!--<property name="maxActive" value="200" />-->
+    <!--&lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
+    <!--<property name="maxWait" value="60000" />-->
+    <!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
+    <!--<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
+    <!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
+    <!--<property name="minEvictableIdleTimeMillis" value="300000" />-->
+    <!--&lt;!&ndash; 打开PSCache，并且指定每个连接上PSCache的大小 &ndash;&gt;-->
+    <!--<property name="poolPreparedStatements" value="true" />&lt;!&ndash; 如果使用Mysql则 建议 设置为false &ndash;&gt;-->
+    <!--<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />-->
+    <!--&lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;-->
+    <!--<property name="filters" value="stat,log4j" />-->
+    <!--&lt;!&ndash; 连接泄露监测 &ndash;&gt;-->
+    <!--<property name="removeAbandoned" value="false" />-->
+    <!--<property name="removeAbandonedTimeout" value="1800" />-->
+    <!--<property name="logAbandoned" value="true" />-->
+    <!--&lt;!&ndash; 数据库加密 &ndash;&gt;-->
+    <!--&lt;!&ndash; <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> &ndash;&gt;-->
+
+    <!--&lt;!&ndash; 用来检测连接是否有效的sql，要求是一个查询语句&ndash;&gt;-->
+    <!--<property name="validationQuery" value="select 1 from dual" />-->
+    <!--&lt;!&ndash; 申请连接的时候检测 &ndash;&gt;-->
+    <!--<property name="testWhileIdle" value="true" />-->
+    <!--&lt;!&ndash; 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 &ndash;&gt;-->
+    <!--<property name="testOnBorrow" value="false" />-->
+    <!--&lt;!&ndash; 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  &ndash;&gt;-->
+    <!--<property name="testOnReturn" value="false" />-->
+
+    <!--</bean>-->
+    <!--&lt;!&ndash; 江西 &ndash;&gt;-->
+    <!--<bean id="dataSource_36" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
+    <!--<property name="username" value="ITSP_APPSM_JXG"></property>-->
+    <!--<property name="password" value="Appsm_JXG#123456"></property>-->
+    <!--<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>-->
+    <!--<property name="url" value="jdbc:oracle:thin:@(description=(address_list=(address=(host=smrhdata7)(protocol=tcp)(port=3436))(address=(host=smrhdata8)(protocol=tcp)(port=3436)) (load_balance=on)(failover=on))(connect_data=(service_name=rmdt04pr))(SERVER=DEDICATED))"></property>-->
+    <!--&lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;-->
+    <!--<property name="initialSize" value="10" />-->
+    <!--<property name="minIdle" value="50" />-->
+    <!--<property name="maxActive" value="200" />-->
+    <!--&lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
+    <!--<property name="maxWait" value="60000" />-->
+    <!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
+    <!--<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
+    <!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
+    <!--<property name="minEvictableIdleTimeMillis" value="300000" />-->
+    <!--&lt;!&ndash; 打开PSCache，并且指定每个连接上PSCache的大小 &ndash;&gt;-->
+    <!--<property name="poolPreparedStatements" value="true" />&lt;!&ndash; 如果使用Mysql则 建议 设置为false &ndash;&gt;-->
+    <!--<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />-->
+    <!--&lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;-->
+    <!--<property name="filters" value="stat,log4j" />-->
+    <!--&lt;!&ndash; 连接泄露监测 &ndash;&gt;-->
+    <!--<property name="removeAbandoned" value="false" />-->
+    <!--<property name="removeAbandonedTimeout" value="1800" />-->
+    <!--<property name="logAbandoned" value="true" />-->
+    <!--&lt;!&ndash; 数据库加密 &ndash;&gt;-->
+    <!--&lt;!&ndash; <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> &ndash;&gt;-->
+
+    <!--&lt;!&ndash; 用来检测连接是否有效的sql，要求是一个查询语句&ndash;&gt;-->
+    <!--<property name="validationQuery" value="select 1 from dual" />-->
+    <!--&lt;!&ndash; 申请连接的时候检测 &ndash;&gt;-->
+    <!--<property name="testWhileIdle" value="true" />-->
+    <!--&lt;!&ndash; 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 &ndash;&gt;-->
+    <!--<property name="testOnBorrow" value="false" />-->
+    <!--&lt;!&ndash; 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  &ndash;&gt;-->
+    <!--<property name="testOnReturn" value="false" />-->
+
+    <!--</bean>-->
+    <!-- 山东 -->
+    <bean id="dataSource_37" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <property name="username" value="ITSP_APPSM_SDL"></property>
+    <property name="password" value="Ajko_GP_XL#sdl1983"></property>
+    <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+    <property name="url" value="jdbc:oracle:thin:@smrhdata33:3436:rmdt17pr1"></property>
+    <!-- 配置初始化大小、最小、最大 -->
+    <property name="initialSize" value="10" />
+    <property name="minIdle" value="50" />
+    <property name="maxActive" value="200" />
+    <!-- 配置获取连接等待超时的时间 -->
+    <property name="maxWait" value="60000" />
+    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    <property name="minEvictableIdleTimeMillis" value="300000" />
+    <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+    <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+    <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+    <!-- 配置监控统计拦截的filters -->
+    <property name="filters" value="stat,log4j" />
+    <!-- 连接泄露监测 -->
+    <property name="removeAbandoned" value="false" />
+    <property name="removeAbandonedTimeout" value="1800" />
+    <property name="logAbandoned" value="true" />
+    <!-- 数据库加密 -->
+    <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+    <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+    <property name="validationQuery" value="select 1 from dual" />
+    <!-- 申请连接的时候检测 -->
+    <property name="testWhileIdle" value="true" />
+    <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+    <property name="testOnBorrow" value="false" />
+    <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+    <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 河南 -->
+    <bean id="dataSource_41" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <property name="username" value="ITSP_APPSM_HNY"></property>
+    <property name="password" value="Ajko_GP_XL#hny1983"></property>
+    <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+    <property name="url" value="jdbc:oracle:thin:@smrhdata31:3436:rmdt16pr1"></property>
+    <!-- 配置初始化大小、最小、最大 -->
+    <property name="initialSize" value="10" />
+    <property name="minIdle" value="50" />
+    <property name="maxActive" value="200" />
+    <!-- 配置获取连接等待超时的时间 -->
+    <property name="maxWait" value="60000" />
+    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    <property name="minEvictableIdleTimeMillis" value="300000" />
+    <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+    <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+    <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+    <!-- 配置监控统计拦截的filters -->
+    <property name="filters" value="stat,log4j" />
+    <!-- 连接泄露监测 -->
+    <property name="removeAbandoned" value="false" />
+    <property name="removeAbandonedTimeout" value="1800" />
+    <property name="logAbandoned" value="true" />
+    <!-- 数据库加密 -->
+    <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+    <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+    <property name="validationQuery" value="select 1 from dual" />
+    <!-- 申请连接的时候检测 -->
+    <property name="testWhileIdle" value="true" />
+    <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+    <property name="testOnBorrow" value="false" />
+    <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+    <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 湖北 -->
+    <bean id="dataSource_42" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="ITSP_APPSM_HBE"></property>
+        <property name="password" value="Ajko_GP_XL#hbe1983"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhdata13:3436:rmdt07pr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 湖南 -->
+    <bean id="dataSource_43" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="ITSP_APPSM_HNX"></property>
+        <property name="password" value="Ajko_GP_XL#hnx1983"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhdata11:3436:rmdt06pr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 广东 -->
+    <bean id="dataSource_44" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="ITSP_APPSM_GDY"></property>
+        <property name="password" value="Ajko_GP_XL#gdy1983"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhdata19:3436:rmdt10pr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 广西 -->
+    <!--<bean id="dataSource_45" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
+    <!--<property name="username" value="ITSP_APPSM_GXG"></property>-->
+    <!--<property name="password" value="Appsm_GXG#123456"></property>-->
+    <!--<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>-->
+    <!--<property name="url" value="jdbc:oracle:thin:@(description=(address_list= (address=(host=smrhdata13) (protocol=tcp)(port=3436))(address=(host=smrhdata14)(protocol=tcp) (port=3436)) (load_balance=on)(failover=on))(connect_data=(service_name= rmdt07pr))(SERVER=DEDICATED))"></property>-->
+    <!--&lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;-->
+    <!--<property name="initialSize" value="10" />-->
+    <!--<property name="minIdle" value="50" />-->
+    <!--<property name="maxActive" value="200" />-->
+    <!--&lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
+    <!--<property name="maxWait" value="60000" />-->
+    <!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
+    <!--<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
+    <!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
+    <!--<property name="minEvictableIdleTimeMillis" value="300000" />-->
+    <!--&lt;!&ndash; 打开PSCache，并且指定每个连接上PSCache的大小 &ndash;&gt;-->
+    <!--<property name="poolPreparedStatements" value="true" />&lt;!&ndash; 如果使用Mysql则 建议 设置为false &ndash;&gt;-->
+    <!--<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />-->
+    <!--&lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;-->
+    <!--<property name="filters" value="stat,log4j" />-->
+    <!--&lt;!&ndash; 连接泄露监测 &ndash;&gt;-->
+    <!--<property name="removeAbandoned" value="false" />-->
+    <!--<property name="removeAbandonedTimeout" value="1800" />-->
+    <!--<property name="logAbandoned" value="true" />-->
+    <!--&lt;!&ndash; 数据库加密 &ndash;&gt;-->
+    <!--&lt;!&ndash; <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> &ndash;&gt;-->
+
+    <!--&lt;!&ndash; 用来检测连接是否有效的sql，要求是一个查询语句&ndash;&gt;-->
+    <!--<property name="validationQuery" value="select 1 from dual" />-->
+    <!--&lt;!&ndash; 申请连接的时候检测 &ndash;&gt;-->
+    <!--<property name="testWhileIdle" value="true" />-->
+    <!--&lt;!&ndash; 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 &ndash;&gt;-->
+    <!--<property name="testOnBorrow" value="false" />-->
+    <!--&lt;!&ndash; 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  &ndash;&gt;-->
+    <!--<property name="testOnReturn" value="false" />-->
+
+    <!--</bean>-->
+    <!-- 海南 -->
+    <bean id="dataSource_46" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="ITSP_APPSM_HNQ"></property>
+        <property name="password" value="Ajko_GP_XL#hnq1983"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhdata11:3436:rmdt06pr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 重庆 -->
+    <bean id="dataSource_50" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="ITSP_APPSM_CQY"></property>
+        <property name="password" value="Ajko_GP_XL#cqy1983"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhdata5:3436:rmdt03pr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 四川 -->
+    <!--<bean id="dataSource_51" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
+    <!--<property name="username" value="ITSP_APPSM_SCS"></property>-->
+    <!--<property name="password" value="Appsm_scs#123456"></property>-->
+    <!--<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>-->
+    <!--<property name="url" value="jdbc:oracle:thin:@(description=(address_list= (address=(host=smrhdata15) (protocol=tcp)(port=3436))(address=(host=smrhdata16)(protocol=tcp) (port=3436)) (load_balance=on)(failover=on))(connect_data=(service_name= rmdt08pr))(SERVER=DEDICATED))"></property>-->
+    <!--&lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;-->
+    <!--<property name="initialSize" value="10" />-->
+    <!--<property name="minIdle" value="50" />-->
+    <!--<property name="maxActive" value="200" />-->
+    <!--&lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
+    <!--<property name="maxWait" value="60000" />-->
+    <!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
+    <!--<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
+    <!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
+    <!--<property name="minEvictableIdleTimeMillis" value="300000" />-->
+    <!--&lt;!&ndash; 打开PSCache，并且指定每个连接上PSCache的大小 &ndash;&gt;-->
+    <!--<property name="poolPreparedStatements" value="true" />&lt;!&ndash; 如果使用Mysql则 建议 设置为false &ndash;&gt;-->
+    <!--<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />-->
+    <!--&lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;-->
+    <!--<property name="filters" value="stat,log4j" />-->
+    <!--&lt;!&ndash; 连接泄露监测 &ndash;&gt;-->
+    <!--<property name="removeAbandoned" value="false" />-->
+    <!--<property name="removeAbandonedTimeout" value="1800" />-->
+    <!--<property name="logAbandoned" value="true" />-->
+    <!--&lt;!&ndash; 数据库加密 &ndash;&gt;-->
+    <!--&lt;!&ndash; <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> &ndash;&gt;-->
+
+    <!--&lt;!&ndash; 用来检测连接是否有效的sql，要求是一个查询语句&ndash;&gt;-->
+    <!--<property name="validationQuery" value="select 1 from dual" />-->
+    <!--&lt;!&ndash; 申请连接的时候检测 &ndash;&gt;-->
+    <!--<property name="testWhileIdle" value="true" />-->
+    <!--&lt;!&ndash; 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 &ndash;&gt;-->
+    <!--<property name="testOnBorrow" value="false" />-->
+    <!--&lt;!&ndash; 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  &ndash;&gt;-->
+    <!--<property name="testOnReturn" value="false" />-->
+
+    <!--</bean>-->
+    <!-- 贵州 -->
+    <bean id="dataSource_52" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="ITSP_APPSM_GZQ"></property>
+        <property name="password" value="Ajko_GP_XL#gzq1983"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhdata1:3436:rmdt01pr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 云南 -->
+    <bean id="dataSource_53" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="ITSP_APPSM_YND"></property>
+        <property name="password" value="Ajko_GP_XL#ynd1983"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhdata17:3436:rmdt09pr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 西藏 -->
+    <bean id="dataSource_54" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <property name="username" value="ITSP_APPSM_XZZ"></property>
+    <property name="password" value="Ajko_GP_XL#xzz1983"></property>
+    <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+    <property name="url" value="jdbc:oracle:thin:@smrhdata25:3436:rmdt13pr1"></property>
+    <!-- 配置初始化大小、最小、最大 -->
+    <property name="initialSize" value="10" />
+    <property name="minIdle" value="50" />
+    <property name="maxActive" value="200" />
+    <!-- 配置获取连接等待超时的时间 -->
+    <property name="maxWait" value="60000" />
+    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    <property name="minEvictableIdleTimeMillis" value="300000" />
+    <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+    <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+    <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+    <!-- 配置监控统计拦截的filters -->
+    <property name="filters" value="stat,log4j" />
+    <!-- 连接泄露监测 -->
+    <property name="removeAbandoned" value="false" />
+    <property name="removeAbandonedTimeout" value="1800" />
+    <property name="logAbandoned" value="true" />
+    <!-- 数据库加密 -->
+    <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+    <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+    <property name="validationQuery" value="select 1 from dual" />
+    <!-- 申请连接的时候检测 -->
+    <property name="testWhileIdle" value="true" />
+    <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+    <property name="testOnBorrow" value="false" />
+    <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+    <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 陕西 -->
+    <bean id="dataSource_61" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="ITSP_APPSM_SXS"></property>
+        <property name="password" value="Ajko_GP_XL#sxs1983"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhdata7:3436:rmdt04pr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 甘肃 -->
+    <bean id="dataSource_62" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="ITSP_APPSM_GSG"></property>
+        <property name="password" value="Ajko_GP_XL#gsg1983"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhdata21:3436:rmdt11pr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!--青海-->
+    <bean id="dataSource_63" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="ITSP_APPSM_QHQ"></property>
+        <property name="password" value="Ajko_GP_XL#qhq1983"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhdata21:3436:rmdt11pr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!--宁夏-->
+    <bean id="dataSource_64" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="ITSP_APPSM_NXN"></property>
+        <property name="password" value="Ajko_GP_XL#nxn1983"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhdata17:3436:rmdt09pr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+    <!-- 新疆 -->
+    <bean id="dataSource_65" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="username" value="itsp_appsm_xjx"></property>
+        <property name="password" value="Ajko_GP_XL#xjx1983"></property>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@smrhdata5:3436:rmdt03pr1"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="50" />
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" /><!-- 如果使用Mysql则 建议 设置为false -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+        <!-- 连接泄露监测 -->
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 数据库加密 -->
+        <!-- <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> -->
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="select 1 from dual" />
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false" />
+
+    </bean>
+	<!-- 长途资源 -->
+	<!--<bean id="dataSource_ct" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
+	<!--<property name="username" value="GMAR_JZ_CT"></property>-->
+	<!--<property name="password" value="Wqc_7812yeW_Dse"></property>-->
+	<!--<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>-->
+	<!--<property name="url" value="jdbc:oracle:thin:@smrhdata35:3436:rmct01pr1"></property>-->
+	<!--&lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;-->
+	<!--<property name="initialSize" value="10" />-->
+	<!--<property name="minIdle" value="50" />-->
+	<!--<property name="maxActive" value="200" />-->
+	<!--&lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
+	<!--<property name="maxWait" value="60000" />-->
+	<!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
+	<!--<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
+	<!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
+	<!--<property name="minEvictableIdleTimeMillis" value="300000" />-->
+	<!--&lt;!&ndash; 打开PSCache，并且指定每个连接上PSCache的大小 &ndash;&gt;-->
+	<!--<property name="poolPreparedStatements" value="true" />&lt;!&ndash; 如果使用Mysql则 建议 设置为false &ndash;&gt;-->
+	<!--<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />-->
+	<!--&lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;-->
+	<!--<property name="filters" value="stat,log4j" />-->
+	<!--&lt;!&ndash; 连接泄露监测 &ndash;&gt;-->
+	<!--<property name="removeAbandoned" value="false" />-->
+	<!--<property name="removeAbandonedTimeout" value="1800" />-->
+	<!--<property name="logAbandoned" value="true" />-->
+	<!--&lt;!&ndash; 数据库加密 &ndash;&gt;-->
+	<!--&lt;!&ndash; <property name="connectionProperties" value="${databus.druid.config.decrypt}" /> &ndash;&gt;-->
+
+	<!--&lt;!&ndash; 用来检测连接是否有效的sql，要求是一个查询语句&ndash;&gt;-->
+	<!--<property name="validationQuery" value="select 1 from dual" />-->
+	<!--&lt;!&ndash; 申请连接的时候检测 &ndash;&gt;-->
+	<!--<property name="testWhileIdle" value="true" />-->
+	<!--&lt;!&ndash; 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 &ndash;&gt;-->
+	<!--<property name="testOnBorrow" value="false" />-->
+	<!--&lt;!&ndash; 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  &ndash;&gt;-->
+	<!--<property name="testOnReturn" value="false" />-->
+
+	<!--</bean>-->
+
+
+	<!-- 协作表 -->
+    <bean id="jdbcTemplate_task" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_task"></property>
+    </bean>
+
+    <!--北京 task-->
+    <bean id="jdbcTemplate_11" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource_11"></property>
+    </bean>
+    <!-- 天津 -->
+    <bean id="jdbcTemplate_12" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource_12"></property>
+    </bean>
+     <!--河北 -->
+    <bean id="jdbcTemplate_13" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource_13"></property>
+    </bean>
+     <!--山西 -->
+    <bean id="jdbcTemplate_14" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource_14"></property>
+    </bean>
+     <!--内蒙古 -->
+    <bean id="jdbcTemplate_15" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource_15"></property>
+    </bean>
+     <!--辽宁 -->
+    <bean id="jdbcTemplate_21" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource_21"></property>
+    </bean>
+    <!-- 吉林 -->
+    <bean id="jdbcTemplate_22" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource_22"></property>
+    </bean>
+    <!-- 黑龙江 -->
+    <bean id="jdbcTemplate_23" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource_23"></property>
+    </bean>
+    <!-- 上海 -->
+    <!--<bean id="jdbcTemplate_31" class="org.springframework.jdbc.core.JdbcTemplate">-->
+    <!--<property name="dataSource" ref="dataSource_31"></property>-->
+    <!--</bean>-->
+    <!-- 江苏 -->
+    <bean id="jdbcTemplate_32" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_32"></property>
+    </bean>
+    <!-- 浙江 -->
+    <bean id="jdbcTemplate_33" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_33"></property>
+    </bean>
+    <!-- 安徽 -->
+    <!--<bean id="jdbcTemplate_34" class="org.springframework.jdbc.core.JdbcTemplate">-->
+    <!--<property name="dataSource" ref="dataSource_34"></property>-->
+    <!--</bean>-->
+    <!--&lt;!&ndash;&lt;!&ndash; 福建 &ndash;&gt;&ndash;&gt;-->
+    <!--<bean id="jdbcTemplate_35" class="org.springframework.jdbc.core.JdbcTemplate">-->
+    <!--<property name="dataSource" ref="dataSource_35"></property>-->
+    <!--</bean>-->
+    <!--&lt;!&ndash;&lt;!&ndash; 江西 &ndash;&gt;&ndash;&gt;-->
+    <!--<bean id="jdbcTemplate_36" class="org.springframework.jdbc.core.JdbcTemplate">-->
+    <!--<property name="dataSource" ref="dataSource_36"></property>-->
+    <!--</bean>-->
+    <!-- 山东 -->
+    <bean id="jdbcTemplate_37" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource_37"></property>
+    </bean>
+    <!-- 河南 -->
+    <bean id="jdbcTemplate_41" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource_41"></property>
+    </bean>
+    <!-- 湖北 -->
+    <bean id="jdbcTemplate_42" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_42"></property>
+    </bean>
+    <!-- 湖南 -->
+    <bean id="jdbcTemplate_43" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_43"></property>
+    </bean>
+    <!-- 广东 -->
+    <bean id="jdbcTemplate_44" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_44"></property>
+    </bean>
+    <!-- 广西 -->
+    <!--<bean id="jdbcTemplate_45" class="org.springframework.jdbc.core.JdbcTemplate">-->
+    <!--<property name="dataSource" ref="dataSource_45"></property>-->
+    <!--</bean>-->
+    <!-- 海南 -->
+    <bean id="jdbcTemplate_46" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_46"></property>
+    </bean>
+    <!-- 重庆 -->
+    <bean id="jdbcTemplate_50" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_50"></property>
+    </bean>
+    <!-- 四川 -->
+    <!--<bean id="jdbcTemplate_51" class="org.springframework.jdbc.core.JdbcTemplate">-->
+    <!--<property name="dataSource" ref="dataSource_51"></property>-->
+    <!--</bean>-->
+    <!-- 贵州 -->
+    <bean id="jdbcTemplate_52" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_52"></property>
+    </bean>
+    <!-- 云南 -->
+    <bean id="jdbcTemplate_53" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_53"></property>
+    </bean>
+    <!-- 西藏 -->
+    <bean id="jdbcTemplate_54" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource_54"></property>
+    </bean>
+    <!-- 陕西 -->
+    <bean id="jdbcTemplate_61" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_61"></property>
+    </bean>
+    <!-- 甘肃 -->
+    <bean id="jdbcTemplate_62" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_62"></property>
+    </bean>
+    <!--青海-->
+    <bean id="jdbcTemplate_63" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_63"></property>
+    </bean>
+    <!-- 宁夏 -->
+    <bean id="jdbcTemplate_64" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_64"></property>
+    </bean>
+    <!-- 新疆 -->
+    <bean id="jdbcTemplate_65" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource_65"></property>
+    </bean>
+
+	<!--&lt;!&ndash; 长途资源 &ndash;&gt;-->
+	<!--<bean id="jdbcTemplate_ct" class="org.springframework.jdbc.core.JdbcTemplate">-->
+	<!--<property name="dataSource" ref="dataSource_ct"></property>-->
+	<!--</bean>-->
+
+</beans>

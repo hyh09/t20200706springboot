@@ -230,7 +230,6 @@ public class AssetCardBo implements Serializable {
     @FileShow(fieldName = "创建人ID",datatype = "Integer",fieldSize = "24.0",selectType = "必填",notes = "创建人ID")
     private  BigInteger creatorId;
 
-    @Conf("")
     @FileShow(fieldName = "创建时间",datatype = "DATE",fieldSize = "null",selectType = "必填",notes = "创建时间")
     private  Date createDate;
     @FileShow(fieldName = "修改人ID",datatype = "Integer",fieldSize = "24.0",selectType = "必填",notes = "修改人ID")

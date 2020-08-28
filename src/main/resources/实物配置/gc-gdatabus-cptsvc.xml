@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringFacetInspection -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:cache="http://www.springframework.org/schema/cache"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:jee="http://www.springframework.org/schema/jee"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:lang="http://www.springframework.org/schema/lang"
+	   xmlns:task="http://www.springframework.org/schema/task"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:c="http://www.springframework.org/schema/c"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:redis="http://www.springframework.org/schema/redis"
+	   xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
+		http://www.springframework.org/schema/redis http://www.springframework.org/schema/redis/spring-redis.xsd">
+
+	<context:annotation-config />
+	<task:annotation-driven />
+
+	<context:component-scan base-package="com.sinovate.ngrms.gdatabus" />
+
+	<!-- spring定时任务的配置 -->
+	<bean id="databusCotroller" class="com.sinovate.ngrms.gdatabus.syncotorl.DatabusCotroller" />
+	<task:scheduled-tasks>
+
+		<task:scheduled ref="databusCotroller" method="execTask" cron="0 0 2,6,10,14,18,22 * * ?"/>
+
+		<!--<task:scheduled ref="databusCotroller" method="execTask" fixed-rate="14400000"/>-->
+	</task:scheduled-tasks>
+
+	
+	<!-- 配置定时任务的线程数 -->
+	<task:executor id="worker" pool-size="1-8"  queue-capacity="16" rejection-policy="CALLER_RUNS"  keep-alive="1" />
+
+	<!--一些程序中用到的参数配置 -->
+	<bean id="databusProperties" class="com.sinovate.ngrms.gdatabus.support.beans.DatabusProperties">
+		<!-- 数据总线的同步模式 -->
+		<property name="syncModel" value="1"></property>
+		<!-- 调度者的名字 -->
+		<property name="cotrollerName" value="Snail-1"></property>
+		<!-- 需要配置需要同步省份 -->
+		<property name="provList" value="ahw,scs,jxg,gxg,shh,fjm"></property>
+		<!-- 提供需要同步的数据表的表名 -->
+		<property name="needSyncTableNames" value="${databus.needSyncTabaleName.list}"></property>
+	</bean>
+
+	<bean id="dataTableSelect" class="com.sinovate.ngrms.gdatabus.support.beans.DataTableSelect">
+		<!-- 从CDC表中读取数据的 select 语句 -->
+		<property name="selectMap" ref="selectMap"></property>
+		<property name="getSelectMap" ref="getSelectMap"></property>
+	</bean>
+
+	<util:map id="selectMap">
+		<entry key="DM_OMDATA" value="#{dmOmdataSelectMap}"/>
+		<entry key="RM_ASSET" value="#{rmAssetSelectMap}"/>
+		<entry key="RM_MATERIEL" value="#{rmMaterielSelectMap}"/>
+		<entry key="RM_PROJECT" value="#{rmProjectSelectMap}"/>
+		<entry key="RR_ASSET_ENTITY" value="#{rrAssetEntitySelectMap}"/>
+		<entry key="RR_PROJECT_ENTITY" value="#{rrProjectEntitySelectMap}"/>
+		<entry key="RM_ASSET_IAM" value="#{rmAssetIamSelectMap}"/>
+		<entry key="PM_MATTER" value="#{pmMatterSelectMap}"/>
+		<entry key="PR_MATTER_ENTITY" value="#{prMatterEntitySelectMap}"/>
+		<entry key="RR_ASSET_MATERIAL" value="#{rrAssetMaterialSelectMap}"/>
+		<entry key="CM_ASSISTANCE" value="#{cmAssistanceSelectMap}"/>
+		<entry key="CM_CABLE" value="#{cmCableSelectMap}"/>
+		<entry key="CM_DEVICE" value="#{cmDeviceSelectMap}"/>
+		<entry key="CM_NET" value="#{cmNetSelectMap}"/>
+		<entry key="CM_WARE" value="#{cmWareSelectMap}"/>
+		<entry key="CM_PIPELINE" value="#{cmPipelineSelectMap}"/>
+		<entry key="CM_FACILITY" value="#{cmFacilitySelectMap}"/>
+		<entry key="DM_MODEL" value="#{dmModelSelectMap}"/>
+		<entry key="DM_MANUFACTOR" value="#{dmManufactorSelectMap}"/>
+		<entry key="IAM_IDLE_FOR_JISHI" value="#{iamIdleForJishiSelectMap}"/>
+		<entry key="RR_PROJECT_ENTITY_CTZY" value="#{rrProjectEntityCtzySelectMap}"/>
+		<entry key="CR_DEVICE_WARE_CTZY" value="#{crDeviceWareCtzySelectMap}"/>
+		<entry key="RM_ADDRESS_CTZY" value="#{rmAddressCtzySelectMap}"/>
+		<entry key="MM_ASSET_SPEC" value="#{mmAssetSpecSelectMap}"/>
+		<entry key="MM_ASSET_MATERIEL_MAPPING" value="#{mmAssetMaterielMappingSelectMap}"/>
+		<entry key="MM_MAR_MAPPING" value="#{mmMarMappingSelectMap}"/>
+		<entry key="MM_MATERIEL_SPEC" value="#{mmMaterielSpecSelectMap}"/>
+		<entry key="EM_ORDER" value="#{eeOrderSelectMap}"/>
+		<entry key="EM_ORDERITEM" value="#{emOrderitemSelectMap}"/>
+		<entry key="RM_AREA_CTZY" value="#{rmAreaCtzySelectMap}"/>
+		<!-- 测试表 -->
+		<!--<entry key="SM_TEST" value="#{smTestSelectMap}"/>-->
+	</util:map>
+
+	<util:map id="dmOmdataSelectMap">
+		<entry key="C_DM_OMDATA" value="${databus.dmOmdata.select}"/>
+	</util:map>
+
+	<util:map id="rmAssetSelectMap">
+		<entry key="C_RM_ASSET" value="${databus.rmAsset.select}"/>
+	</util:map>
+
+	<util:map id="rmMaterielSelectMap">
+		<entry key="C_RM_MATERIEL" value="${databus.rmMateriel.select}"/>
+	</util:map>
+
+	<util:map id="rmProjectSelectMap">
+		<entry key="C_RM_PROJECT" value="${databus.rmProject.select}"/>
+	</util:map>
+
+	<util:map id="rrAssetEntitySelectMap">
+		<entry key="C_RR_ASSET_ENTITY" value="${databus.rrAssetEntity.select}"/>
+	</util:map>
+
+	<util:map id="rrProjectEntitySelectMap">
+		<entry key="C_RR_PROJECT_ENTITY" value="${databus.rrProjectEntity.select}"/>
+	</util:map>
+
+	<util:map id="mmAssetSpecSelectMap">
+		<entry key="C_MM_ASSET_SPEC" value="${databus.mmAssetSpec.select}"/>
+	</util:map>
+
+	<util:map id="mmAssetMaterielMappingSelectMap">
+		<entry key="C_MM_ASSET_MATERIEL_MAPPING" value="${databus.mmAssetMaterielMapping.select}"/>
+	</util:map>
+
+	<util:map id="mmMarMappingSelectMap">
+		<entry key="C_MM_MAR_MAPPING" value="${databus.mmMarMapping.select}"/>
+	</util:map>
+
+	<util:map id="mmMaterielSpecSelectMap">
+		<entry key="C_MM_MATERIEL_SPEC" value="${databus.mmMaterielSpec.select}"/>
+	</util:map>
+
+	<util:map id="rmAssetIamSelectMap">
+		<entry key="C_RM_ASSET_IAM" value="${databus.rmAssetIam.select}"/>
+	</util:map>
+	<util:map id="pmMatterSelectMap">
+		<entry key="C_PM_MATTER" value="${databus.pmMatter.select}"/>
+	</util:map>
+	<util:map id="prMatterEntitySelectMap">
+		<entry key="C_PR_MATTER_ENTITY" value="${databus.prMatterEntity.select}"/>
+	</util:map>
+	<util:map id="rrAssetMaterialSelectMap">
+		<entry key="C_RR_ASSET_MATERIAL" value="${databus.rrAssetMaterial.select}"/>
+	</util:map>
+	<util:map id="iamIdleForJishiSelectMap">
+		<entry key="C_IAM_IDLE_FOR_JISHI" value="${databus.iamIdleForJishi.select}"/>
+	</util:map>
+
+	<util:map id="cmAssistanceSelectMap">
+		<entry key="C_CM_ASSISTANCE" value="${databus.cmAssistance.select}"/>
+	</util:map>
+	<util:map id="cmCableSelectMap">
+		<entry key="C_CM_CABLE" value="${databus.cmCable.select}"/>
+	</util:map>
+	<util:map id="cmDeviceSelectMap">
+		<entry key="C_CM_DEVICE" value="${databus.cmDevice.select}"/>
+	</util:map>
+	<util:map id="cmNetSelectMap">
+		<entry key="C_CM_NET" value="${databus.cmNet.select}"/>
+	</util:map>
+	<util:map id="cmWareSelectMap">
+		<entry key="C_CM_WARE" value="${databus.cmWare.select}"/>
+	</util:map>
+	<util:map id="cmPipelineSelectMap">
+		<entry key="C_CM_PIPELINE" value="${databus.cmPipeline.select}"/>
+	</util:map>
+	<util:map id="cmFacilitySelectMap">
+		<entry key="C_CM_FACILITY" value="${databus.cmFacility.select}"/>
+	</util:map>
+	<util:map id="dmModelSelectMap">
+		<entry key="C_DM_MODEL" value="${databus.dmModel.select}"/>
+	</util:map>
+	<util:map id="dmManufactorSelectMap">
+		<entry key="C_DM_MANUFACTOR" value="${databus.dmManufactor.select}"/>
+	</util:map>
+	<util:map id="rrProjectEntityCtzySelectMap">
+		<entry key="C_RR_PROJECT_ENTITY_CTZY" value="${databus.rrProjectEntityCtzy.select}"/>
+	</util:map>
+	<util:map id="crDeviceWareCtzySelectMap">
+		<entry key="C_CR_DEVICE_WARE_CTZY" value="${databus.crDeviceWareCtzy.select}"/>
+	</util:map>
+	<util:map id="rmAddressCtzySelectMap">
+		<entry key="C_RM_ADDRESS_CTZY" value="${databus.rmAddressCtzy.select}"/>
+	</util:map>
+	<util:map id="rmAreaCtzySelectMap">
+		<entry key="C_RM_AREA_CTZY" value="${databus.rmAreaCtzy.select}"/>
+	</util:map>
+
+	<util:map id="eeOrderSelectMap">
+		<entry key="C_EE_ORDER_EXAMINE" value="${databus.eeOrderExamine.select}"/>
+		<entry key="C_EE_ORDER_ASSETENTITYALTER" value="${databus.eeOrderAssetentityalter.select}"/>
+		<entry key="C_EE_ORDER_ASSETINTERACTION" value="${databus.eeOrderAssetinteraction.select}"/>
+	</util:map>
+
+	<util:map id="emOrderitemSelectMap">
+		<entry key="C_EM_ORDERITEM" value="${databus.emOrderitem.select}"/>
+		<entry key="C_EE_ORDERITEM_ASSET" value="${databus.eeOrderitemAsset.select}"/>
+		<entry key="C_EE_ORDERITEM_ASSETDETAIL" value="${databus.eeOrderitemAssetdetail.select}"/>
+	</util:map>
+
+	<!-- oip性能测试 -->
+	<!--<util:map id="smTestSelectMap">-->
+	<!--<entry key="C_SM_TEST" value="${databus.smTest.select}"/>-->
+	<!--</util:map>-->
+
+	<util:map id="getSelectMap">
+		<entry key="DM_OMDATA" value="#{getDmOmdataSelectMap}"/>
+		<entry key="RM_ASSET" value="#{getRmAssetSelectMap}"/>
+		<entry key="RM_MATERIEL" value="#{getRmMaterielSelectMap}"/>
+		<entry key="RM_PROJECT" value="#{getRmProjectSelectMap}"/>
+		<entry key="RR_ASSET_ENTITY" value="#{getRrAssetEntitySelectMap}"/>
+		<entry key="RR_PROJECT_ENTITY" value="#{getRrProjectEntitySelectMap}"/>
+		<entry key="RM_ASSET_IAM" value="#{getRmAssetIamSelectMap}"/>
+		<entry key="PM_MATTER" value="#{getPmMatterSelectMap}"/>
+		<entry key="PR_MATTER_ENTITY" value="#{getPrMatterEntitySelectMap}"/>
+		<entry key="RR_ASSET_MATERIAL" value="#{getRrAssetMaterialSelectMap}"/>
+		<entry key="CM_ASSISTANCE" value="#{getCmAssistanceSelectMap}"/>
+		<entry key="CM_CABLE" value="#{getCmCableSelectMap}"/>
+		<entry key="CM_DEVICE" value="#{getCmDeviceSelectMap}"/>
+		<entry key="CM_NET" value="#{getCmNetSelectMap}"/>
+		<entry key="CM_WARE" value="#{getCmWareSelectMap}"/>
+		<entry key="CM_PIPELINE" value="#{getCmPipelineSelectMap}"/>
+		<entry key="CM_FACILITY" value="#{getCmFacilitySelectMap}"/>
+		<entry key="DM_MODEL" value="#{getDmModelSelectMap}"/>
+		<entry key="DM_MANUFACTOR" value="#{getDmManufactorSelectMap}"/>
+		<entry key="IAM_IDLE_FOR_JISHI" value="#{getIamIdleForJishiSelectMap}"/>
+		<entry key="RR_PROJECT_ENTITY_CTZY" value="#{getRrProjectEntityCtzySelectMap}"/>
+		<entry key="CR_DEVICE_WARE_CTZY" value="#{getCrDeviceWareCtzySelectMap}"/>
+		<entry key="RM_ADDRESS_CTZY" value="#{getRmAddressCtzySelectMap}"/>
+		<entry key="MM_ASSET_SPEC" value="#{getMmAssetSpecSelectMap}"/>
+		<entry key="MM_ASSET_MATERIEL_MAPPING" value="#{getMmAssetMaterielMappingSelectMap}"/>
+		<entry key="MM_MAR_MAPPING" value="#{getMmMarMappingSelectMap}"/>
+		<entry key="MM_MATERIEL_SPEC" value="#{getMmMaterielSpecSelectMap}"/>
+		<entry key="EM_ORDER" value="#{getEeOrderSelectMap}"/>
+		<entry key="EM_ORDERITEM" value="#{getEmOrderitemSelectMap}"/>
+		<entry key="RM_AREA_CTZY" value="#{getRmAreaCtzySelectMap}"/>
+		<!-- 测试表 -->
+		<!--<entry key="SM_TEST" value="#{smTestSelectMap}"/>-->
+	</util:map>
+
+	<util:map id="getDmOmdataSelectMap">
+		<entry key="C_DM_OMDATA" value="${databus.getdmOmdata.select}"/>
+	</util:map>
+
+	<util:map id="getRmAssetSelectMap">
+		<entry key="C_RM_ASSET" value="${databus.getrmAsset.select}"/>
+	</util:map>
+
+	<util:map id="getRmMaterielSelectMap">
+		<entry key="C_RM_MATERIEL" value="${databus.getrmMateriel.select}"/>
+	</util:map>
+
+	<util:map id="getRmProjectSelectMap">
+		<entry key="C_RM_PROJECT" value="${databus.getrmProject.select}"/>
+	</util:map>
+
+	<util:map id="getRrAssetEntitySelectMap">
+		<entry key="C_RR_ASSET_ENTITY" value="${databus.getrrAssetEntity.select}"/>
+	</util:map>
+
+	<util:map id="getRrProjectEntitySelectMap">
+		<entry key="C_RR_PROJECT_ENTITY" value="${databus.getrrProjectEntity.select}"/>
+	</util:map>
+
+	<util:map id="getMmAssetSpecSelectMap">
+		<entry key="C_MM_ASSET_SPEC" value="${databus.getmmAssetSpec.select}"/>
+	</util:map>
+
+	<util:map id="getMmAssetMaterielMappingSelectMap">
+		<entry key="C_MM_ASSET_MATERIEL_MAPPING" value="${databus.getmmAssetMaterielMapping.select}"/>
+	</util:map>
+
+	<util:map id="getMmMarMappingSelectMap">
+		<entry key="C_MM_MAR_MAPPING" value="${databus.getmmMarMapping.select}"/>
+	</util:map>
+
+	<util:map id="getMmMaterielSpecSelectMap">
+		<entry key="C_MM_MATERIEL_SPEC" value="${databus.getmmMaterielSpec.select}"/>
+	</util:map>
+
+	<util:map id="getRmAssetIamSelectMap">
+		<entry key="C_RM_ASSET_IAM" value="${databus.getrmAssetIam.select}"/>
+	</util:map>
+	<util:map id="getPmMatterSelectMap">
+		<entry key="C_PM_MATTER" value="${databus.getpmMatter.select}"/>
+	</util:map>
+	<util:map id="getPrMatterEntitySelectMap">
+		<entry key="C_PR_MATTER_ENTITY" value="${databus.getprMatterEntity.select}"/>
+	</util:map>
+	<util:map id="getRrAssetMaterialSelectMap">
+		<entry key="C_RR_ASSET_MATERIAL" value="${databus.getrrAssetMaterial.select}"/>
+	</util:map>
+
+	<util:map id="getCmAssistanceSelectMap">
+		<entry key="C_CM_ASSISTANCE" value="${databus.getcmAssistance.select}"/>
+	</util:map>
+	<util:map id="getCmCableSelectMap">
+		<entry key="C_CM_CABLE" value="${databus.getcmCable.select}"/>
+	</util:map>
+	<util:map id="getCmDeviceSelectMap">
+		<entry key="C_CM_DEVICE" value="${databus.getcmDevice.select}"/>
+	</util:map>
+	<util:map id="getCmNetSelectMap">
+		<entry key="C_CM_NET" value="${databus.getcmNet.select}"/>
+	</util:map>
+	<util:map id="getCmWareSelectMap">
+		<entry key="C_CM_WARE" value="${databus.getcmWare.select}"/>
+	</util:map>
+	<util:map id="getCmPipelineSelectMap">
+		<entry key="C_CM_PIPELINE" value="${databus.getcmPipeline.select}"/>
+	</util:map>
+	<util:map id="getCmFacilitySelectMap">
+		<entry key="C_CM_FACILITY" value="${databus.getcmFacility.select}"/>
+	</util:map>
+	<util:map id="getDmModelSelectMap">
+		<entry key="C_DM_MODEL" value="${databus.getdmModel.select}"/>
+	</util:map>
+	<util:map id="getDmManufactorSelectMap">
+		<entry key="C_DM_MANUFACTOR" value="${databus.getdmManufactor.select}"/>
+	</util:map>
+	<util:map id="getIamIdleForJishiSelectMap">
+		<entry key="C_IAM_IDLE_FOR_JISHI" value="${databus.getiamIdleForJishi.select}"/>
+	</util:map>
+	<util:map id="getRrProjectEntityCtzySelectMap">
+		<entry key="C_RR_PROJECT_ENTITY_CTZY" value="${databus.getrrProjectEntityCtzy.select}"/>
+	</util:map>
+	<util:map id="getCrDeviceWareCtzySelectMap">
+		<entry key="C_CR_DEVICE_WARE_CTZY" value="${databus.getcrDeviceWareCtzy.select}"/>
+	</util:map>
+	<util:map id="getRmAddressCtzySelectMap">
+		<entry key="C_RM_ADDRESS_CTZY" value="${databus.getrmAddressCtzy.select}"/>
+	</util:map>
+	<util:map id="getRmAreaCtzySelectMap">
+		<entry key="C_RM_AREA_CTZY" value="${databus.getrmAreaCtzy.select}"/>
+	</util:map>
+
+	<util:map id="getEeOrderSelectMap">
+		<entry key="C_EE_ORDER_EXAMINE" value="${databus.geteeOrderExamine.select}"/>
+		<entry key="C_EE_ORDER_ASSETENTITYALTER" value="${databus.geteeOrderAssetentityalter.select}"/>
+		<entry key="C_EE_ORDER_ASSETINTERACTION" value="${databus.geteeOrderAssetinteraction.select}"/>
+	</util:map>
+
+	<util:map id="getEmOrderitemSelectMap">
+		<entry key="C_EM_ORDERITEM" value="${databus.getemOrderitem.select}"/>
+		<entry key="C_EE_ORDERITEM_ASSET" value="${databus.geteeOrderitemAsset.select}"/>
+		<entry key="C_EE_ORDERITEM_ASSETDETAIL" value="${databus.geteeOrderitemAssetdetail.select}"/>
+	</util:map>
+
+	<!-- 从CDC表中删除数据的 delete 语句 -->
+	<bean id="dataTableDelete" class="com.sinovate.ngrms.gdatabus.support.beans.DataTableDelete">
+		<property name="deleteMap" ref="deleteMap"></property>
+	</bean>
+
+	<util:map id="deleteMap">
+		<entry key="C_RM_ASSET" value="${databus.rmAsset.delete}"/>
+		<entry key="C_RR_PROJECT_ENTITY" value="${databus.rrProjectEntity.delete}"/>
+
+	</util:map>
+
+	<!-- 使用spring的自动注入配置java bean -->
+	<!--<bean id="needSyncTabaleNames" class="com.sinovate.ngrms.gdatabus.support.beans.NeedSyncTabaleNames">-->
+	<!--<property name="dataTableNameArray" value="${databus.needSyncTabaleName.list}"></property>-->
+	<!--</bean>-->
+
+	<bean id="databusBusiDataSyncer" class="com.sinovate.ngrms.gdatabus.synhdl.DatabusBusiDataSyncer"></bean>
+	
+
+
+</beans>
