@@ -17,9 +17,11 @@ import com.utltl.exceltool.excel4j.binding.Excel2Bean;
 import com.utltl.exceltool.excel4j.binding.Excel2BeanRowMapper;
 import com.utltl.exceltool.excel4j.binding.impl.DefaultExcel4JavaRowMapper;
 import com.utltl.exceltool.excel4j.binding.impl.Excel4JavaImpl;
+import com.utltl.exceltool.mobansanm.MsgExcelBo;
 import com.utltl.exceltool.mobansanm.RequestforreferenceBo;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
+import org.apache.commons.lang.ArrayUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +31,109 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PmAssetMssbackTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PmAssetMssbackTest.class);
+
+
+    @Test
+    public void  Test1111() throws Exception {
+
+
+        StringBuffer  buffer = new StringBuffer("");
+        for(int i=0;i<100;i++){
+            String  num=   "400000004050"+i;
+            String id="10000010000000000000290"+i;
+            String msg = "公司代码[" + "A001" + "]、卡片编码[" + num + "]对应的卡片为在途状态，所在工单的单据号为["+id+"]，不能用来发起卡实流程!";
+            buffer.append(msg);
+
+        }
+        System.out.println("===>"+buffer);
+        List<MsgExcelBo> msgExcelBos=  getMsgExcelBo(buffer.toString());
+        new  ExportExcelyunUtils().write2File("Test",msgExcelBos,new MsgExcelBo());
+
+
+
+    }
+
+
+//
+    //是否低效变更发起失败的原因是： js前台拼接的
+    //公司代码[" + assetIamItem.getBukrs() + "]、卡片编码[" + assetIamItem.getAssetsCardCode() + "]对应的卡片为在途状态，不能用来发起卡实流程!
+
+    private  List<MsgExcelBo>  getMsgExcelBo(String str){
+         List<MsgExcelBo>  msgExcelBos = new ArrayList<>();
+         if(StringUtils.isEmpty(str)){
+             return  msgExcelBos;
+         }
+        String[] Str1Array = str.split("!");
+       List<String> stringList=  Arrays.asList(Str1Array);
+         for(String st1:stringList){
+             MsgExcelBo  msgExcelBo = new MsgExcelBo();
+             msgExcelBo.setBurk(subString(st1,"公司代码[","]、卡片编码"));
+             msgExcelBo.setAsseCode(subString(st1,"卡片编码[","]对应的"));
+           String str111=  subString(st1,"]对应的","卡实流程")+"卡实流程";
+           System.out.println("=str111===>"+str111);
+           msgExcelBo.setNotes(str111);
+             msgExcelBos.add(msgExcelBo);
+         }
+
+        return  msgExcelBos;
+    }
+
+
+    @Test
+    public  void Test09(){
+        String  st1="公司代码[A001]、卡片编码[400000004050]对应的卡片为在途状态，不能用来发起卡实流程!";
+     String burks=   subString(st1,"公司代码[","]、卡片编码");
+     System.out.println("公司代码"+burks);
+    }
+
+
+    private String subString(String str, String strStart, String strEnd) {
+        /* 找出指定的2个字符在 该字符串里面的 位置 */
+        int strStartIndex = str.indexOf(strStart);
+        int strEndIndex = str.indexOf(strEnd);
+        /* index 为负数 即表示该字符串中 没有该字符 */
+        if (strStartIndex < 0) {
+            LOGGER.info("字符串 :----><---- 中不存在 " + strStart + ", 无法截取目标字符串");
+            return "";
+        }
+        if (strEndIndex < 0) {
+            LOGGER.info("字符串 :----><---- 中不存在 " + strStart + ", 无法截取目标字符串");
+            return "";
+        }
+            /* 开始截取 */
+        String result = str.substring(strStartIndex, strEndIndex).substring(strStart.length());
+        return result;
+    }
+
+
+
+
+
+    public static String StringStartTrim(String stream, String trim) {
+        // null或者空字符串的时候不处理
+        if (stream == null || stream.length() == 0 || trim == null || trim.length() == 0) {
+            return stream;
+        }
+        // 要删除的字符串结束位置
+        int end;
+        // 正规表达式
+        String regPattern = "[" + trim + "]*+";
+        Pattern pattern = Pattern.compile(regPattern, Pattern.CASE_INSENSITIVE);
+        // 去掉原始字符串开头位置的指定字符
+        Matcher matcher = pattern.matcher(stream);
+        if (matcher.lookingAt()) {
+            end = matcher.end();
+            stream = stream.substring(end);
+        }
+        // 返回处理后的字符串
+        return stream;
+    }
 
 
     /**

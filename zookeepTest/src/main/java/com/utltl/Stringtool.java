@@ -76,4 +76,30 @@ public class Stringtool {
         }
         return sb.toString();
     }
+
+
+    /**
+     * 截取字符串的方法
+     * @param str
+     * @param strStart
+     * @param strEnd
+     * @return
+     */
+    private String subString(String str, String strStart, String strEnd) {
+        /* 找出指定的2个字符在 该字符串里面的 位置 */
+        int strStartIndex = str.indexOf(strStart);
+        int strEndIndex = str.indexOf(strEnd);
+        /* index 为负数 即表示该字符串中 没有该字符 */
+        if (strStartIndex < 0) {
+//            LOGGER.info("字符串 :----><---- 中不存在 " + strStart + ", 无法截取目标字符串");
+            return "";
+        }
+        if (strEndIndex < 0) {
+//            LOGGER.info("字符串 :----><---- 中不存在 " + strStart + ", 无法截取目标字符串");
+            return "";
+        }
+            /* 开始截取 */
+        String result = str.substring(strStartIndex, strEndIndex).substring(strStart.length());
+        return result;
+    }
 }

@@ -200,7 +200,7 @@ public class ExportExcelyunUtils implements ExportExcelyunSvc {
 
              ｄ表示下边区域[可见]的首行序号；
              */
-            sheet.createFreezePane( 2,2,3,2);
+            sheet.createFreezePane( 3,2,3,3);
          //   CreateFreezePane(0,1,0,1)
             writeExcel(wb, sheet, data);//
             if(file.exists()){
